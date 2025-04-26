@@ -17,7 +17,7 @@ class DaftarPinjamController extends Controller
             
             // Tambahkan variabel untuk kalender
             'calendarEvents' => Rent::with(['room', 'user'])
-                                  ->whereIn('status', ['disetujui', 'dipinjam'])
+                                  ->whereIn('status', ['selesai', 'dipinjam', 'pending']) // tambah status eaa
                                   ->get()
         ]);
     }
