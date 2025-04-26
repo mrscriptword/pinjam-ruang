@@ -1,45 +1,35 @@
-/* Table Styles */
-
 .table-wrapper {
     margin: 10px 70px 70px;
-    box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 35px 50px rgba(141, 7, 7, 0.747);
 }
 
 .fl-table {
     border-radius: 5px;
     font-size: 14px;
     font-weight: normal;
-    border: none;
     border-collapse: collapse;
     width: 100%;
     max-width: 100%;
-    white-space: nowrap;
-    background-color: white;
+    background-color: #fdf7e9; /* warna krem muda */
+    color: #000; /* teks hitam */
+    border: 2px solid #f6a8a8; /* garis luar tabel */
 }
 
-.fl-table td,
-.fl-table th {
-    text-align: center;
-    padding: 8px;
-}
-
+.fl-table th,
 .fl-table td {
-    border-right: 1px solid #f8f8f8;
-    font-size: 12px;
+    border: 1px solid #f6a8a8; /* warna pink terang */
+    text-align: center;
+    padding: 10px;
 }
 
 .fl-table thead th {
-    color: #ffffff;
-    background: #324960;
-}
-
-.fl-table thead th:nth-child(odd) {
-    color: #ffffff;
-    background: #516b85;
+    background-color: #ffcfd0; /* header pink terang */
+    color: #000; /* teks header hitam */
+    font-weight: bold;
 }
 
 .fl-table tr:nth-child(odd) {
-    background: #f8f8f8;
+    background-color: transparent; /* tidak perlu zebra */
 }
 
 /* Responsive */

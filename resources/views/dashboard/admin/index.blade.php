@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-<div class="col-md-10 p-0">
+<div class="content-container" id="content-container">
     <div class="card-body text-end">
         @if (session()->has('adminSuccess'))
         <div class="col-md-16 mx-auto alert alert-success text-center  alert-success alert-dismissible fade show"
@@ -28,57 +28,88 @@
         </button>
         @endif
 
-        <div class="table-responsive">
-            <table class="table table-hover table-stripped table-bordered text-center dt-head-center" id="datatable">
-                <thead class="table-info">
-                    <tr>
-                        <th scope="row">No.</th>
-                        <th scope="row">Username</th>
-                        <th scope="row">Nomor Induk</th>
-                        <th scope="row">Email</th>
-                        <th scope="row">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if ($admins->count() > 0)
-                    @foreach ($admins as $admin)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $admin->name }}</td>
-                        <td>{{ $admin->nomor_induk }}</td>
-                        <td>{{ $admin->email }}</td>
-                        <td>
-                            {{-- ... other actions like edit ... --}}
+        <div class="table-responsive d-flex justify-content-center">
+            <div style="width: auto; margin: 0 auto;"> <!-- Adjusted to center align without resizing -->
+                <table class="table table-hover table-stripped table-bordered text-center dt-head-center" id="datatable">
+                    <thead class="table-info">
+                        <tr>
+                            <th scope="row">No.</th>
+                            <th scope="row">Username</th>
+                            <th scope="row">Nomor Induk</th>
+                            <th scope="row">Email</th>
+                            <th scope="row">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($admins->count() > 0)
+                        @foreach ($admins as $admin)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $admin->name }}</td>
+                            <td>{{ $admin->nomor_induk }}</td>
+                            <td>{{ $admin->email }}</td>
+                            <td>
+                                {{-- ... other actions like edit ... --}}
 
-                            {{-- Update the href to use the route name 'admin.demote' --}}
-                            <a href="{{ route('admin.demote', ['id' => $admin->id]) }}" class="badge bg-warning border-0" onclick="return confirm('Ubah role admin {{ $admin->name }} menjadi user?')">
-                                <i class="bi bi-arrow-down-square"></i> Jadikan User
-                            </a>
+                                {{-- Update the href to use the route name 'admin.demote' --}}
+                                <a href="{{ route('admin.demote', ['id' => $admin->id]) }}" class="badge bg-warning border-0" onclick="return confirm('Ubah role admin {{ $admin->name }} menjadi user?')">
+                                    <i class="bi bi-arrow-down-square"></i> Jadikan User
+                                </a>
 
-                            {{-- Form for deleting the admin entirely (if exists) --}}
-                            <form action="/dashboard/admin/{{ $admin->id }}" method="POST" class="d-inline">
-                                @method('delete')
-                                @csrf
-                                <button class="badge bg-danger border-0" onclick="return confirm('Hapus admin {{ $admin->name }}?')">
-                                    <i class="bi bi-trash"></i> Hapus
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                    @else
-                    <tr>
-                        <td colspan="5" class="text-center">
-                            -- Belum Ada Daftar Admin --
-                        </td>
-                    </tr>
-                    @endif
-                </tbody>
-            </table>
+                                {{-- Form for deleting the admin entirely (if exists) --}}
+                                <form action="/dashboard/admin/{{ $admin->id }}" method="POST" class="d-inline">
+                                    @method('delete')
+                                    @csrf
+                                    <button class="badge bg-danger border-0" onclick="return confirm('Hapus admin {{ $admin->name }}?')">
+                                        <i class="bi bi-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                -- Belum Ada Daftar Admin --
+                            </td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+@endsection
+
 @extends('dashboard.partials.addAdminModal')
 @extends('dashboard.partials.editAdminModal')
 {{-- @extends('dashboard.partials.chooseAdminModal') --}}
-@endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const contentContainer = document.getElementById('content-container');
+        const tableWrapper = document.querySelector('.table-responsive > div');
+
+        function adjustContent() {
+            if (sidebar.classList.contains('collapsed')) {
+                contentContainer.style.marginLeft = 'auto';
+                contentContainer.style.marginRight = 'auto';
+                contentContainer.style.width = '800px'; // Fixed width for collapsed sidebar
+                tableWrapper.style.maxWidth = '900px'; // Wider table when sidebar is collapsed
+            } else {
+                contentContainer.style.marginLeft = 'auto';
+                contentContainer.style.marginRight = 'auto';
+                contentContainer.style.width = '800px'; // Fixed width for expanded sidebar
+                tableWrapper.style.maxWidth = '700px'; // Narrower table when sidebar is expanded
+            }
+        }
+
+        // Adjust content on sidebar toggle
+        document.getElementById('toggle-sidebar').addEventListener('click', adjustContent);
+
+        // Initial adjustment
+        adjustContent();
+    });
+</script>
