@@ -150,16 +150,26 @@
     }
 
     .sidebar.collapsed {
-        width: 80px; /* Adjust as needed */
+        width: 100px; /* Adjust as needed */
     }
 
     .sidebar.collapsed .sidebar-title,
     .sidebar.collapsed .sidebar-item span {
-        display: none;
+        display: none; /* Hide text but keep icons visible */
     }
 
     .sidebar.collapsed .sidebar-logo span {
         display: none;
+    }
+
+    .sidebar-item svg {
+        width: 24px; /* Keep icon size consistent */
+        height: 24px; /* Keep icon size consistent */
+        margin-right: 20px; /* Maintain spacing */
+    }
+
+    .sidebar.collapsed .sidebar-item svg {
+        margin-right: 0px; /* Adjust alignment for collapsed state */
     }
 
     #toggle-sidebar {
