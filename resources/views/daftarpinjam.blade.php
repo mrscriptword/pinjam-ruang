@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-xl-6 col-lg-7">
                 <div class="section-title">
-                    <h2 class="wow fadeInUp" data-wow-delay=".2s">{{ $title }} </h2>
+                    <h2 class="wow fadeInUp" data-wow-delay=".2s">{{ $title }}</h2>
                     <p class="wow fadeInUp" data-wow-delay=".4s">Pemitahuan dari admin akan muncul di daftar
                         peminjaman ini. Silahkan tunggu sampai dapat persetujuan dari admin.</p>
                 </div>
@@ -83,7 +83,6 @@
                                         <td>-</td>
                                         @endif
                                     @endif
-
                                     <td>{{ $rent->status }}</td>
                                 </tr>
                                 @endforeach
@@ -101,7 +100,7 @@
             </div>
 
             <!-- Kalender Peminjaman -->
-            <div class="col-md-12 mt-4">
+            <div class="col-md-10 mt-4">
                 <div class="card">
                     <div class="card-header">
                         <h5>Kalender Peminjaman Ruangan</h5>
@@ -115,34 +114,65 @@
     </div>
 </section>
 
-<!-- Tambahkan CSS dan JS untuk FullCalendar -->
+<!-- CSS dan JS untuk FullCalendar -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
 <style>
     #calendar {
-        max-width: 80%; /* Menurunkan lebar kalender */
+        max-width: 100%;
         margin: 0 auto;
-        font-size: 0.75rem; /* Ukuran teks lebih kecil */
+        font-family: Arial, sans-serif;
+        background: #fff;
+        border-radius: 8px;
+        padding: 10px;
     }
     .fc-toolbar {
-        font-size: 0.75rem; /* Ukuran font toolbar lebih kecil */
-        margin-bottom: 10px;
+        font-size: 1rem; 
+        margin-bottom: 15px;
     }
     .fc-daygrid-event {
-        font-size: 0.7rem; /* Ukuran teks lebih kecil pada event */
-        padding: 2px 4px;
+        font-size: 0.9rem;
+        padding: 3px 6px;
+        border-radius: 4px;
+        white-space: normal !important;
+        word-wrap: break-word;
     }
     .fc-daygrid-day-number {
-        font-size: 0.7rem;
+        font-size: 1rem;
+        color: #333;
     }
     .fc-daygrid-week-number {
-        font-size: 0.7rem;
+        font-size: 0.9rem;
     }
     .fc-event {
-        padding: 2px 4px;
-        font-size: 0.7rem;
+        padding: 3px 6px;
+        font-size: 0.9rem;
+        border: none;
     }
     .fc-daygrid-day-top {
-        padding: 2px;
+        padding: 3px;
+    }
+    .fc-today-button {
+        background-color: #ffcc00 !important;
+        color: #333 !important;
+        border: none !important;
+        border-radius: 4px;
+    }
+    .fc-prev-button, .fc-next-button {
+        background-color: #3788d8 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 4px;
+    }
+    .fc-daygrid-day {
+        background: #f9f9f9;
+    }
+    .fc-day-today {
+        background: #fff3cd !important;
+    }
+    .fc-col-header-cell-cushion {
+        font-size: 1rem;
+        color: #333;
+        padding: 5px;
     }
 </style>
 
@@ -151,6 +181,10 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
+        if (!calendarEl) {
+            console.error('Calendar element not found!');
+            return;
+        }
         
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
@@ -166,12 +200,14 @@
                     title: '{{ $rent->room->code }} - {{ $rent->user->name }}',
                     start: '{{ $rent->time_start_use }}',
                     end: '{{ $rent->time_end_use }}',
-                    color: @if($rent->status == 'dipinjam') 
+                    color: @if($rent->status == 'dipinjam' && $rent->user_id != auth()->user()->id && $rent->status == 'pending')
+                              '#ffc107' // Kuning untuk status dipinjam orang lain tapi masih pending
+                           @elseif($rent->status == 'dipinjam')
                               '#dc3545' // Merah untuk status dipinjam
                            @elseif($rent->status == 'selesai')
                               '#28a745' // Hijau untuk status selesai
                            @else
-                              '#ffc107' // Kuning untuk status menunggu
+                              '#ffc107' // Kuning untuk status lainnya (termasuk pending)
                            @endif,
                     extendedProps: {
                         purpose: '{{ $rent->purpose }}',
@@ -190,7 +226,7 @@
                     'Status: ' + eventObj.extendedProps.status + '\n' +
                     'Tujuan: ' + eventObj.extendedProps.purpose + '\n' +
                     'Mulai: ' + eventObj.start.toLocaleString() + '\n' +
-                    'Selesai: ' + eventObj.end.toLocaleString()
+                    'Selesai: ' + (eventObj.end ? eventObj.end.toLocaleString() : 'Tidak ditentukan')
                 );
             }
         });
