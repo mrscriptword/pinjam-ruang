@@ -3,7 +3,7 @@ html,
 body {
     font-family: "Poppins";
     font-style: normal;
-    background-color: #f8f8fa;
+    background-color: #f6f1de;
     overflow-x: hidden;
     position: relative;
 }
@@ -39,7 +39,7 @@ body {
 }
 
 aside {
-    background-color: #fff;
+    background-color: #7f048a;
     padding: 50px 24px;
     padding-bottom: 250px;
     height: 100vh;
@@ -69,7 +69,7 @@ aside #toggle-navbar {
     font-weight: 800;
     font-size: 20px;
     line-height: 30px;
-    color: #121f3e;
+    color: #fff;
     margin-left: 16px;
 }
 .sidebar-title {
@@ -91,12 +91,14 @@ aside #toggle-navbar {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    text-align: left; /* Default alignment */
+    transition: text-align 0.3s ease;
 }
 .sidebar-item.active {
-    background: #4640de;
+    background: #afd9a5;
 }
 .sidebar-item.active span {
-    color: #fff;
+    color: #2d3b55;
 }
 .sidebar-item.active svg path {
     stroke: #fff;
@@ -114,7 +116,7 @@ aside #toggle-navbar {
     font-size: 16px;
     line-height: 24px;
     /* identical to box height */
-    color: #121f3e;
+    color: #ffff;
 }
 
 .col-navbar {
@@ -459,4 +461,27 @@ aside #toggle-navbar {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.content-container {
+    transition: margin 0.3s ease, width 0.3s ease;
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px; /* Fixed width for non-responsive layout */
+    text-align: center; /* Center align content */
+}
+
+.sidebar.collapsed + .content-container {
+    width: 800px; /* Maintain fixed width when sidebar is collapsed */
+}
+
+.sidebar.collapsed .sidebar-item {
+    text-align: center; /* Align center when collapsed */
+}
+
+.table-responsive > div {
+    transition: max-width 0.3s ease; /* Smooth transition for table width */
+    margin: 0 auto; /* Center align the table container */
+    max-width: none; /* Prevent resizing */
+    text-align: center; /* Ensure content alignment */
 }
