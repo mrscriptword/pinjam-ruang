@@ -1,225 +1,87 @@
 @extends('layouts.main')
+@section('content')
+    <h1 class="mt" style="font-family: 'Cal Sans'; color: #3e3f5b !important;">Daftar Ruangan</h1>
+    <h6 style="width: 40%; color: #3e3f5b;">Temukan ruangan yang sempurna
+        untuk kebutuhan Anda, mulai dari ruang rapat yang nyaman hingga
+        ruang acara yang luas, dan pilih dari daftar yang tersedia untuk
+        pengalaman terbaik!</h6>
 
-@section('container')
-<!--====== Daftar Ruang ======-->
-<div class="preloader">
-    <div class="loader">
-        <div class="ytp-spinner">
-            <div class="ytp-spinner-container">
-                <div class="ytp-spinner-rotator">
-                    <div class="ytp-spinner-left">
-                        <div class="ytp-spinner-circle"></div>
-                    </div>
-                    <div class="ytp-spinner-right">
-                        <div class="ytp-spinner-circle"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<section id="blog" class="blog-area pt-170 pb-140">
-    <div class="container">
+    <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-xl-6 col-lg-7">
-                <div class="section-title">
-                    <h2 class="wow fadeInUp" data-wow-delay=".2s">Daftar Ruangan</h2>
-                    <p class="wow fadeInUp" data-wow-delay=".4s">Pesan Ruang dengan Lebih Mudah! Kami menyediakan solusi
-                        peminjaman ruang yang praktis untuk mahasiswa dan staf universitas.</p>
+            <div class="col-md-10">
+                <div class="row g-4">
+                    @foreach ($rooms as $room)
+                        <div class="col-md-4">
+                            <div class="card text-white rounded-4 p-2 h-100" style="background-color: #222232;">
+                                <img src="{{ $room->img && Storage::exists('public/' . $room->img) ? asset('storage/' . $room->img) : $room->img ?? '/assets/images/exmpRUANGAN.jpg' }}"
+                                    class="card-img-top rounded-top-4" alt="Ruangan"
+                                    style="width: 100%; height: 200px; object-fit: cover; overflow: hidden;">
+                                <div class="card-body d-flex flex-column justify-content-between"
+                                    style="min-height: 200px;">
+                                    <div>
+                                        <h5 class="card-title fw-bold" style="color: #f6f1de;">{{ $room->name }}</h5>
+                                        <p class="card-text text-white-50">Gedung {{ $room->building->name }} -
+                                            {{ $room->code }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-auto">
+                                        <small><i class="bi bi-people"></i> {{ $room->capacity }} seats -
+                                            {{ $room->facilities ?? 'AC' }}</small>
+                                        <a href="/showruang/{{ $room->code }}"
+                                            class="btn btn-sm rounded-pill px-3 btn-hover"
+                                            style="background-color: #A9D6C1; color: black;">PINJAM</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div style="display: none;">
+                    {{ $rooms->links() }}
                 </div>
             </div>
-        </div>
-        <div class="row">
-            @foreach ($rooms as $room)
-            <div class="col-xl-4 col-lg-4 col-md-6">
-                <div class="single-blog">
-                    <div class="blog-img">
-                        <a href="/showruang/{{ $room->code }}">
-                            @if ($room->img && Storage::exists('public/' . $room->img))
-                            <img src="{{ asset('storage/' . $room->img) }}" alt="">
-                            @else
-                            @if ($room->img)
-                            <img src="{{ $room->img }}" alt="FotoRuang">
-                            @endif
-                            @endif
-                        </a>
-                    </div>
-                    <div class="blog-content">
-                        <h4><a href="/showruang/{{ $room->code }}">{{ $room->name }}</a></h4>
-                        <p>Gedung : {{ $room->building->name }}</p>
-                        <p>Kapasitas : {{ $room->capacity }}</p>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-            <div class="d-flex justify-content-end">
-                {{ $rooms->links() }}
-            </div>
-        </div>
 
 
-    </div>
-</section>
+            <div class="col-md-2 d-flex flex-column align-items-end justify-content-center gap-2">
+                @php
+                    $currentPage = $rooms->currentPage();
+                    $lastPage = $rooms->lastPage();
+                    $start = max($currentPage - 1, 1);
+                    $end = min($start + 2, $lastPage);
 
-<section id="contact" class="contact-area">
-    <div class="map-bg">
-        <img src="assets/images/map-bg.svg" alt="">
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-5 col-lg-5">
-                <div class="section-title">
-                    <h2 class="wow fadeInUp" data-wow-delay=".2s">Form Pinjam Ruang</h2>
-                    <p class="wow fadeInUp" data-wow-delay=".4s">Isi form secara lengkap untuk meminjam ruangan</p>
-                </div>
-            </div>
-            <div class="col-xl-7 col-lg-7">
-                <div class="contact-form-wrapper">
-                    <form action="/daftarpinjam" method="post">
-                        @csrf
-                        <input type="hidden" name="room_id_hidden" id="room_id_hidden">
-                        <div class="row">
-                            <div class="col-12 mb-3">
-                                <label for="room_id" class="form-label d-block">Kode Ruangan</label>
-                                <select class="form-select" aria-label="Default select example" name="room_id"
-                                    id="room_id" required>
-                                    @if (count(request()->segments()) < 3)
-                                        <option selected disabled>Pilih Kode Ruangan</option>
-                                        @endif
-                                        @foreach ($allRooms as $room)
-                                        @if ($room->code == request()->segment(count(request()->segments())))
-                                        <option value="{{ $room->id }}" selected>{{ $room->code }}
-                                            @else
-                                        <option value="{{ $room->id }}">{{ $room->name }}
-                                        </option>
-                                        @endif
-                                        @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label for="time_start" class="form-label">Mulai Pinjam</label>
-                                <input type="datetime-local" class="form-control @error('time_start_use') is-invalid @enderror" id="time_start_use"
-                                    name="time_start_use" value="{{ old('time_start_use') }}" required min="{{ date('Y-m-d\TH:i') }}">
-                                @error('time_start_use')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                                <div class="invalid-feedback" id="time_start_feedback">
-                                    Waktu mulai pinjam tidak boleh di masa lalu.
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="time_end" class="form-label">Selesai Pinjam</label>
-                                <input type="datetime-local" class="form-control @error('time_end_use') is-invalid @enderror" id="time_end_use"
-                                    name="time_end_use" value="{{ old('time_end_use') }}" required>
-                                @error('time_end_use')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                                <div class="invalid-feedback" id="time_end_feedback">
-                                    Waktu selesai pinjam harus setelah waktu mulai pinjam.
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="purpose" class="form-label">Tujuan</label>
-                                <input type="text" class="form-control  @error('purpose') is-invalid @enderror"
-                                    id="purpose" name="purpose" value="{{ old('purpose') }}" autocomplete="off"
-                                    required>
-                                @error('purpose')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 text-right">
-                                <button class="main-btn btn-hover" type="submit">Send</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    if ($end - $start < 2) {
+                        $start = max($end - 2, 1);
+                    }
+                @endphp
+
+                @if ($currentPage > 1)
+                    <a href="{{ $rooms->url($currentPage - 1) }}" class="btn btn-outline-secondary p-2 fs-5"
+                        style="width: 50px;">↑</a>
+                @else
+                    <button class="btn btn-outline-secondary p-2 fs-5" style="width: 50px;" disabled>↑</button>
+                @endif
+
+                @for ($i = $start; $i <= $end; $i++)
+                    @if ($i == $currentPage)
+                        <button class="btn btn-secondary p-2 fs-5" style="width: 50px;">{{ $i }}</button>
+                    @else
+                        <a href="{{ $rooms->url($i) }}" class="btn btn-outline-secondary p-2 fs-5"
+                            style="width: 50px;">{{ $i }}</a>
+                    @endif
+                @endfor
+
+                @if ($currentPage < $lastPage)
+                    <a href="{{ $rooms->url($currentPage + 1) }}" class="btn btn-outline-secondary p-2 fs-5"
+                        style="width: 50px;">↓</a>
+                @else
+                    <button class="btn btn-outline-secondary p-2 fs-5" style="width: 50px;" disabled>↓</button>
+                @endif
             </div>
         </div>
     </div>
-</section>
-<!--====== Daftar Ruang ======-->
+
+    <style>
+        .btn-hover:hover {
+            color: #f6f1de !important;
+        }
+    </style>
 @endsection
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const startTimeInput = document.getElementById('time_start_use');
-        const endTimeInput = document.getElementById('time_end_use');
-        const bookingForm = document.querySelector('form[action="/daftarpinjam"]');
-
-        // Set minimum date for start time (today)
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const nowString = `${year}-${month}-${day}T${hours}:${minutes}`;
-
-        startTimeInput.setAttribute('min', nowString);
-
-        // Validation event for start time
-        startTimeInput.addEventListener('change', function() {
-            const startTime = new Date(this.value);
-            const currentTime = new Date();
-
-            if (startTime < currentTime) {
-                this.classList.add('is-invalid');
-                return false;
-            } else {
-                this.classList.remove('is-invalid');
-                // Update minimum for end time when start time changes
-                if (this.value) {
-                    endTimeInput.setAttribute('min', this.value);
-                }
-            }
-        });
-
-        // Validation event for end time
-        endTimeInput.addEventListener('change', function() {
-            const endTime = new Date(this.value);
-            const startTime = new Date(startTimeInput.value);
-
-            if (endTime <= startTime) {
-                this.classList.add('is-invalid');
-                return false;
-            } else {
-                this.classList.remove('is-invalid');
-            }
-        });
-
-        // Form submission validation
-        bookingForm.addEventListener('submit', function(event) {
-            const startTime = new Date(startTimeInput.value);
-            const endTime = new Date(endTimeInput.value);
-            const currentTime = new Date();
-
-            let formValid = true;
-
-            if (startTime < currentTime) {
-                startTimeInput.classList.add('is-invalid');
-                formValid = false;
-            }
-
-            if (endTime <= startTime) {
-                endTimeInput.classList.add('is-invalid');
-                formValid = false;
-            }
-
-            if (!formValid) {
-                event.preventDefault();
-            }
-        });
-    });
-</script>
