@@ -1,122 +1,75 @@
-<!doctype html>
-<html class="no-js" lang="en">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-
-    <title> {{ $title }} | Universitas Sultan Ageng Tirtayasa </title>
-
-    <meta name="description" content="">
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ $title }} | Universitas Sultan Ageng Tirtayasa</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/Logo_UNTIRTA.png') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.2.0.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-5.0.5-alpha.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/table.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/index.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/normalize.css') }}" />
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}"> --}}
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
 </head>
+<body style="background-color: #f6f1de;">
+    <nav class="navbar navbar-expand-lg px-3" style="background-color: #3e3f5b;">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <img src="/assets/images/logo_UNTIRTA.png" alt="Logo" width="50" height="50">
+            </a>
 
-@include('partials.navbar')
+            <div class="mx-auto d-flex gap-4">
+                <a class="nav-link fw-bold" href="/daftarruang"
+                style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#ffffff'; this.style.textShadow='0px 0px 5px #ffffff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)';">Daftar Ruangan</a>
+                <a class="nav-link fw-bold" href="/" style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#ffffff'; this.style.textShadow='0px 0px 5px #ffffff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)';">Beranda</a>
+                <a class="nav-link fw-bold" href="/daftarpinjam" style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#ffffff'; this.style.textShadow='0px 0px 5px #ffffff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)';">Daftar Peminjaman</a>
+            </div>
 
-@yield('container')
+            <div class="d-flex align-items-center gap-4">
+                @auth
+                    <i class="bi bi-bell-fill fs-5" style="color: #f6f1de; transition: transform 0.3s, color 0.3s; cursor: pointer;" onmouseover="this.style.transform='scale(1.2)'; this.style.color='#ffffff';" onmouseout="this.style.transform='scale(1)'; this.style.color='#f6f1de';"></i>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="btn border border-warning rounded-pill text-warning">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
+                @else
+                    <a href="/login" class="btn border border-warning rounded-pill text-warning">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
+                @endauth
+            </div>
+        </div>
+    </nav>
 
-@if (request()->path() !== 'login')
-    @include('partials.footer')
-@endif
+    <div class="container mt-5">
+        @yield('content')
+    </div>
 
-<!--====== Bootstrap js ======-->
-<script src="{{ asset('assets/js/bootstrap.bundle-5.0.0.alpha-min.js') }}"></script>
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
-
-<!--====== wow js ======-->
-<script src="{{ asset('assets/js/wow.min.js') }}"></script>
-
-<!--====== Main js ======-->
-<script src="{{ asset('assets/js/main.js') }}"></script>
-
-<script>
-    // Get the navbar
-
-    // for menu scroll 
-    var pageLink = document.querySelectorAll('.page-scroll');
-
-    pageLink.forEach(elem => {
-        elem.addEventListener('click', e => {
-            e.preventDefault();
-            document.querySelector(elem.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth',
-                offsetTop: 1 - 60,
-            });
-        });
-    });
-
-    // section menu active
-    function onScroll(event) {
-        var sections = document.querySelectorAll('.page-scroll');
-        var scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
-
-        for (var i = 0; i < sections.length; i++) {
-            var currLink = sections[i];
-            var val = currLink.getAttribute('href');
-            var refElement = document.querySelector(val);
-            var scrollTopMinus = scrollPos + 73;
-            if (refElement.offsetTop <= scrollTopMinus && (refElement.offsetTop + refElement.offsetHeight >
-                    scrollTopMinus)) {
-                document.querySelector('.page-scroll').classList.remove('active');
-                currLink.classList.add('active');
-            } else {
-                currLink.classList.remove('active');
+    <footer class="text-white text-center py-3 mt-5 position-relative" style="background-color: #3e3f5b;">
+        <div class="container position-relative" style="height: 200px;">
+            <div class="position-absolute" style="right: 20px; top: 50%; transform: translateY(-50%); text-align: right;">
+                <p class="mb-0 fw-bold">Our Team</p>
+                <p class="mb-0">Abdulhadi Muntashir</p>
+                <p class="mb-0">Rendy Ilyasa</p>
+                <p class="mb-0">Damar Bayu Hanugrah</p>
+                <p class="mb-0">Yolanda Wulandari</p>
+                <p class="mb-0">Naufal Arhab Fadhil Muhammad</p>
+                <p class="mb-0">Maulana Faizar Rasyadan</p>
+                <p class="mb-0">Naufal Pancar Nugraha</p>
+            </div>
+        </div>
+        <img src="/assets/images/batik.svg" alt="Tata Logo" class="position-absolute" style="bottom: 0; left: 0; height: 100%; margin: 0;">
+        <style>
+            footer {
+                padding-top: 50px;
+                padding-bottom: 50px;
             }
-        }
-    };
+        </style>
+    </footer>
 
-    window.document.addEventListener('scroll', onScroll);
-
-
-    //===== close navbar-collapse when a  clicked
-    let navbarToggler = document.querySelector(".navbar-toggler");
-    var navbarCollapse = document.querySelector(".navbar-collapse");
-
-    document.querySelectorAll(".page-scroll").forEach(e =>
-        e.addEventListener("click", () => {
-            navbarToggler.classList.remove("active");
-            navbarCollapse.classList.remove('show')
-        })
-    );
-    navbarToggler.addEventListener('click', function() {
-        navbarToggler.classList.toggle("active");
-    });
-
-    function togglePassword() {
-        var x = document.getElementById("password-content-3-6");
-        if (x.type === "password") {
-            x.type = "text";
-            document
-                .getElementById("icon-toggle")
-                .setAttribute("fill", "#2ec49c");
-        } else {
-            x.type = "password";
-            document
-                .getElementById("icon-toggle")
-                .setAttribute("fill", "#CACBCE");
-        }
-    }
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-</script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
-
 </html>
