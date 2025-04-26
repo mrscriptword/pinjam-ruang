@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\TemporaryRentController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,9 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
 
+    // Mark notification as read route
+    Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('mark.notification.read');
+
     Route::get('/dashboard/overview', function () {
         return view('/dashboard/overview/index', [
             'title' => "Dashboard Admin",
@@ -60,7 +64,6 @@ Route::middleware(['auth'])->group(function () {
         // Update the method name from 'removeAdmin' to 'demoteToUser'
         Route::get('dashboard/admin/{id}/demote', [DashboardAdminController::class, 'demoteToUser'])->name('admin.demote'); // Renamed route and method
         Route::post('/dashboard/users/import', [DashboardUserController::class, 'import'])->name('users.import');
-
     });
 
     Route::resource('/daftarpinjam', DashboardRentController::class);
