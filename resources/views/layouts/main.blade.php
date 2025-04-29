@@ -54,6 +54,7 @@
                         $approvedRentalsList = \App\Models\Rent::with(['room', 'user'])
                         ->where('user_id', auth()->user()->id)
                         ->whereIn('status', ['dipinjam', 'ditolak'])
+                        ->where('read_status', false)
                         ->orderBy('updated_at', 'desc')
                         ->take(5)
                         ->get();
