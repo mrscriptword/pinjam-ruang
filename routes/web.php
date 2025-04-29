@@ -43,6 +43,9 @@ Route::middleware(['auth'])->group(function () {
     // Mark notification as read route
     Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('mark.notification.read');
 
+    // Add AJAX search route for rooms
+    Route::get('/search-rooms', [DaftarRuangController::class, 'searchRooms'])->name('search.rooms');
+
     Route::get('/dashboard/overview', function () {
         return view('/dashboard/overview/index', [
             'title' => "Dashboard Admin",
@@ -57,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard/rents-export', [DashboardRentController::class, 'export'])->name('rents.export');
         Route::get('dashboard/rents/{id}/endTransaction', [DashboardRentController::class, 'endTransaction']);
         Route::resource('dashboard/rooms', DashboardRoomController::class);
+        Route::get('/dashboard/search-rooms', [DashboardRoomController::class, 'searchRooms'])->name('dashboard.search.rooms');
         Route::resource('dashboard/users', DashboardUserController::class);
         Route::resource('dashboard/admin', DashboardAdminController::class);
         Route::resource('/daftarpinjam', DashboardRentController::class);

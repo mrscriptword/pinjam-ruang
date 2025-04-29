@@ -24,7 +24,6 @@ class DashboardRoomController extends Controller
             'buildings' => Building::all(),
         ]);
     }
-    
 
     /**
      * Show the form for creating a new resource.
@@ -74,7 +73,8 @@ class DashboardRoomController extends Controller
     {
         $imgPath = $request->file('img')->storeAs('public/assets/images/ruang/', $code . '.' . $request->file('img')->extension());
         return 'assets/images/ruang/' . basename($imgPath);
-    }    /**
+    }
+    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Room  $room
@@ -94,7 +94,7 @@ class DashboardRoomController extends Controller
             'room' => $room,
             'rooms' => Room::all(),
             'rents' => Rent::where('room_id', $room->id)->get(),
-            'randomImage' => $randomImage, 
+            'randomImage' => $randomImage,
         ]);
     }
 
@@ -134,34 +134,34 @@ class DashboardRoomController extends Controller
                 'type' => 'required',
                 'description' => 'required|max:250',
             ];
-    
+
             if ($request->code != $room->code) {
                 $rules['code'] = 'required|max:20|unique:rooms';
             }
-    
+
             $validatedData = $request->validate($rules);
-    
+
             if ($request->file('img')) {
                 // Hapus gambar lama jika ada
                 if ($room->img && Storage::exists($room->img)) {
                     Storage::delete($room->img);
                 }
-    
+
                 // Unggah gambar baru
                 $imgPath = $request->file('img')->storeAs('public/assets/images/ruang/', $validatedData['code'] . '.' . $request->file('img')->extension());
                 $validatedData['img'] = 'assets/images/ruang/' . basename($imgPath);
             }
-    
+
             $validatedData['status'] = false;
-    
+
             $room->update($validatedData);
-    
+
             return redirect('/dashboard/rooms')->with('roomSuccess', 'Data ruangan berhasil diubah');
         } catch (\Exception $e) {
             return redirect('/dashboard/rooms')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
-    
+
     /**
      * Remove the specified resource from storage.
      *
@@ -172,5 +172,36 @@ class DashboardRoomController extends Controller
     {
         Room::destroy($room->id);
         return redirect('/dashboard/rooms')->with('deleteRoom', 'Data ruangan berhasil dihapus');
+    }
+
+    /**
+     * Search for rooms based on query string.
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function searchRooms(Request $request)
+    {
+        $query = $request->input('query');
+
+        if (empty($query)) {
+            return response()->json([
+                'rooms' => Room::orderBy('created_at', 'desc')->paginate(10)->items(),
+                'count' => Room::count()
+            ]);
+        }
+
+        $rooms = Room::where('name', 'like', "%{$query}%")
+            ->orWhere('code', 'like', "%{$query}%")
+            ->orWhere('type', 'like', "%{$query}%")
+            ->orWhere('capacity', 'like', "%{$query}%")
+            ->with('building')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json([
+            'rooms' => $rooms,
+            'count' => $rooms->count()
+        ]);
     }
 }
