@@ -1,9 +1,5 @@
-<!-- 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
--->
-
 # Anomali Laravel
-Vel… vel… vel… Laravel. Suara gaib yang cuma muncul saat kamu mengerjakan tugas **PBO** di tengah malam. Konon, bila ada yang menggunakan framework gajah jahat, makhluk ini datang menusuk-nusuk akal dan kewarasan kalian satu per satu. hunusan pedangnya terdengar seperti kompilasi blade yang gagal: “Vel… vel… Laravel… iiii takunyooooo!”
+Vel… vel… vel… Laravel. Suara gaib yang cuma muncul saat kamu mengerjakan tugas **PBO** di tengah malam. Konon, bila ada yang menggunakan framework gajah jahat ini, Gajah jahat akan datang menusuk-nusuk akal dan kewarasan kalian satu per satu. hunusan pedangnya terdengar seperti kompilasi blade yang gagal: “Vel… vel… Laravel… iiii takunyooooo!”
 Bagikan ke temanmu yang suka main laravel, sebelum mereka didatangi anomali ini!
 ## Preview
 <img src="anomali laravel.png" style="max-width:100%">
@@ -57,7 +53,11 @@ Bagikan ke temanmu yang suka main laravel, sebelum mereka didatangi anomali ini!
 9. Open your browser and go to `127.0.0.1:8000` to use the application.
    
 10. Login:
-**User**
-    - email: user@untirta.ac.id password: user
-**Admin**
-    - email: admin@untirta.ac.id password: admin 
+- **User**
+```
+email: user@untirta.ac.id password: user
+```
+- **Admin**
+```
+email: admin@untirta.ac.id password: admin
+```
