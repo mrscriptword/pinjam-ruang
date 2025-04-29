@@ -11,7 +11,7 @@
     <link href="{{ asset('assets/css/table.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-    <title>{{ $title }} | Universitas Sultan Ageng Tirtayasa</title>
+    <title>{{ $title }} | Sipirang UNTIRTA </title>
     <link rel="icon" type="image/x-icon" href="{{ asset('assets/images/Logo_UNTIRTA') }}">
 </head>
 
