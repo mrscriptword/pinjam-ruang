@@ -49,7 +49,7 @@
                 </div>
                 @endforeach
             </div>
-            <div style="display: none;">
+            <div id="pagination-container" class="mt-4">
                 {{ $rooms->links() }}
             </div>
             <div id="noResultsMessage" class="text-center mt-4 d-none">
@@ -58,7 +58,7 @@
         </div>
 
         <!-- Rest of the pagination code remains unchanged -->
-        <div class="col-md-2 d-flex flex-column align-items-end justify-content-center gap-2">
+        <div class="col-md-2 d-flex flex-column align-items-end justify-content-center gap-2" id="pagination-buttons">
             @php
             $currentPage = $rooms->currentPage();
             $lastPage = $rooms->lastPage();
@@ -71,24 +71,24 @@
                 @endphp
 
                 @if ($currentPage> 1)
-                <a href="{{ $rooms->url($currentPage - 1) }}" class="btn btn-outline-secondary p-2 fs-5"
-                    style="width: 50px;">↑</a>
+                <a href="{{ $rooms->url($currentPage - 1) }}" class="btn btn-outline-secondary p-2 fs-5 pagination-nav"
+                    data-page="{{ $currentPage - 1 }}" style="width: 50px;">↑</a>
                 @else
                 <button class="btn btn-outline-secondary p-2 fs-5" style="width: 50px;" disabled>↑</button>
                 @endif
 
                 @for ($i = $start; $i <= $end; $i++)
                     @if ($i==$currentPage)
-                    <button class="btn btn-secondary p-2 fs-5" style="width: 50px;">{{ $i }}</button>
+                    <button class="btn btn-secondary p-2 fs-5 pagination-page" data-page="{{ $i }}" style="width: 50px;">{{ $i }}</button>
                     @else
-                    <a href="{{ $rooms->url($i) }}" class="btn btn-outline-secondary p-2 fs-5"
-                        style="width: 50px;">{{ $i }}</a>
+                    <a href="{{ $rooms->url($i) }}" class="btn btn-outline-secondary p-2 fs-5 pagination-page"
+                        data-page="{{ $i }}" style="width: 50px;">{{ $i }}</a>
                     @endif
                     @endfor
 
                     @if ($currentPage < $lastPage)
-                        <a href="{{ $rooms->url($currentPage + 1) }}" class="btn btn-outline-secondary p-2 fs-5"
-                        style="width: 50px;">↓</a>
+                        <a href="{{ $rooms->url($currentPage + 1) }}" class="btn btn-outline-secondary p-2 fs-5 pagination-nav"
+                        data-page="{{ $currentPage + 1 }}" style="width: 50px;">↓</a>
                         @else
                         <button class="btn btn-outline-secondary p-2 fs-5" style="width: 50px;" disabled>↓</button>
                         @endif
@@ -110,6 +110,10 @@
         box-shadow: 0 0 0 0.25rem rgb(169 214 193 / 25%);
         border-color: #A9D6C1;
     }
+
+    #pagination-container {
+        display: none;
+    }
 </style>
 
 <script>
@@ -117,56 +121,98 @@
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.getElementById('searchButton');
         const clearSearchButton = document.getElementById('clearSearchButton');
-        const roomCards = document.querySelectorAll('.room-card');
+        const roomsContainer = document.getElementById('roomsContainer');
         const noResultsMessage = document.getElementById('noResultsMessage');
+        const paginationContainer = document.getElementById('pagination-container');
+        const paginationButtons = document.getElementById('pagination-buttons');
 
-        // Search function
+        // Hold the original state of the rooms for resetting
+        const originalRoomsHTML = roomsContainer.innerHTML;
+        let searchTimeout;
+
+        // Function to create room card HTML from search results
+        function createRoomCard(room) {
+            const imgSrc = room.img ? room.img : '/assets/images/exmpRUANGAN.jpg';
+
+            return `
+            <div class="col-md-4 room-card search-highlight">
+                <div class="card text-white rounded-4 p-2 h-100" style="background-color: #222232;">
+                    <img src="${imgSrc}" class="card-img-top rounded-top-4" alt="Ruangan"
+                        style="width: 100%; height: 200px; object-fit: cover; overflow: hidden;">
+                    <div class="card-body d-flex flex-column justify-content-between" style="min-height: 200px;">
+                        <div>
+                            <h5 class="card-title fw-bold" style="color: #f6f1de;">${room.name}</h5>
+                            <p class="card-text text-white-50">Gedung ${room.building.name} - ${room.code}</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <small><i class="bi bi-people"></i> ${room.capacity} seats - ${room.facilities || 'AC'}</small>
+                            <a href="/showruang/${room.code}"
+                                class="btn btn-sm rounded-pill px-3 btn-hover"
+                                style="background-color: #A9D6C1; color: black;">PINJAM</a>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // Search function using AJAX
         function performSearch() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            if (!searchTerm) {
+            const searchTerm = searchInput.value.trim();
+
+            if (searchTerm === '') {
                 clearSearch();
                 return;
             }
 
+            // Show loading indicator
+            roomsContainer.innerHTML = '<div class="col-12 text-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+
             // Show clear button when search is performed
             clearSearchButton.style.display = 'block';
 
-            let matchCount = 0;
+            // Hide pagination during search
+            paginationContainer.style.display = 'none';
+            paginationButtons.style.display = 'none';
 
-            roomCards.forEach(card => {
-                const roomName = card.querySelector('.card-title').textContent.toLowerCase();
-                const roomCode = card.querySelector('.card-text').textContent.toLowerCase();
-                const roomFacilities = card.querySelector('small').textContent.toLowerCase();
+            // Make AJAX call to search endpoint
+            fetch(`/search-rooms?query=${encodeURIComponent(searchTerm)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.count === 0) {
+                        roomsContainer.innerHTML = ''; // Clear the container
+                        noResultsMessage.classList.remove('d-none');
+                    } else {
+                        noResultsMessage.classList.add('d-none');
+                        let roomsHTML = '';
 
-                if (roomName.includes(searchTerm) || roomCode.includes(searchTerm) || roomFacilities.includes(searchTerm)) {
-                    card.style.display = '';
-                    card.classList.add('search-highlight');
-                    setTimeout(() => {
-                        card.classList.remove('search-highlight');
-                    }, 2000);
-                    matchCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+                        data.rooms.forEach(room => {
+                            roomsHTML += createRoomCard(room);
+                        });
 
-            // Show/hide "no results" message
-            if (matchCount === 0) {
-                noResultsMessage.classList.remove('d-none');
-            } else {
-                noResultsMessage.classList.add('d-none');
-            }
+                        roomsContainer.innerHTML = roomsHTML;
+
+                        // Remove search highlight effect after a delay
+                        setTimeout(() => {
+                            document.querySelectorAll('.search-highlight').forEach(card => {
+                                card.classList.remove('search-highlight');
+                            });
+                        }, 2000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error searching rooms:', error);
+                    roomsContainer.innerHTML = '<div class="col-12 text-center">An error occurred while searching. Please try again.</div>';
+                });
         }
 
         // Clear search function
         function clearSearch() {
             searchInput.value = '';
-            roomCards.forEach(card => {
-                card.style.display = '';
-                card.classList.remove('search-highlight');
-            });
+            roomsContainer.innerHTML = originalRoomsHTML;
             clearSearchButton.style.display = 'none';
             noResultsMessage.classList.add('d-none');
+            paginationContainer.style.display = '';
+            paginationButtons.style.display = '';
         }
 
         // Event listeners
@@ -181,18 +227,39 @@
                 }
             });
 
+            // Debounced search while typing
             searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+
                 // Show the clear button when there's text
                 clearSearchButton.style.display = searchInput.value ? 'block' : 'none';
 
-                // If input is empty, restore all cards
+                // If input is empty, restore all cards immediately
                 if (!searchInput.value) {
                     clearSearch();
+                    return;
                 }
+
+                // Otherwise debounce the search
+                searchTimeout = setTimeout(() => {
+                    performSearch();
+                }, 500);
             });
 
             clearSearchButton.addEventListener('click', function() {
                 clearSearch();
+            });
+
+            // Handle pagination clicks when not in search mode
+            document.querySelectorAll('.pagination-page, .pagination-nav').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (searchInput.value.trim() !== '') {
+                        e.preventDefault();
+                        // Show alert that pagination is disabled during search
+                        alert('Please clear your search first to use pagination');
+                        return false;
+                    }
+                });
             });
         }
     });

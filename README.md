@@ -57,8 +57,7 @@ Bagikan ke temanmu yang suka main laravel, sebelum mereka didatangi anomali ini!
 9. Open your browser and go to `127.0.0.1:8000` to use the application.
    
 10. Login:
--> User
+**User**
     - email: user@untirta.ac.id password: user
-    
--> Admin
+**Admin**
     - email: admin@untirta.ac.id password: admin 

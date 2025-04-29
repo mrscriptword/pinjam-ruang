@@ -19,6 +19,32 @@ class DaftarRuangController extends Controller
         ]);
     }
 
+    public function searchRooms(Request $request)
+    {
+        $query = $request->input('query');
+
+        if (empty($query)) {
+            return response()->json([
+                'rooms' => Room::orderBy('created_at', 'desc')->paginate(6)->items(),
+                'count' => Room::count()
+            ]);
+        }
+
+        $rooms = Room::where('name', 'like', "%{$query}%")
+            ->orWhere('code', 'like', "%{$query}%")
+            ->orWhere('type', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%")
+            ->orWhere('capacity', 'like', "%{$query}%")
+            ->with('building')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return response()->json([
+            'rooms' => $rooms,
+            'count' => $rooms->count()
+        ]);
+    }
+
     public function show(Room $room)
     {
 
