@@ -3,7 +3,7 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h1 class="mt" style="font-family: 'Cal Sans'; color: #3e3f5b !important;">Daftar Ruangan</h1>
-        <h6 style="width: 95%; color: #3e3f5b;">Temukan ruangan yang sempurna
+        <h6 style="width: 55%; color: #3e3f5b;">Temukan ruangan yang sempurna
             untuk kebutuhan Anda, mulai dari ruang rapat yang nyaman hingga
             ruang acara yang luas, dan pilih dari daftar yang tersedia untuk
             pengalaman terbaik!</h6>

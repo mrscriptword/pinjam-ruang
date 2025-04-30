@@ -22,11 +22,21 @@
             </a>
 
             <div class="mx-auto d-flex gap-4">
-                <a class="nav-link fw-bold" href="/daftarruang"
-                    style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#ffffff'; this.style.textShadow='0px 0px 5px #ffffff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)';">Daftar Ruangan</a>
-                <a class="nav-link fw-bold" href="/" style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#ffffff'; this.style.textShadow='0px 0px 5px #ffffff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)';">Beranda</a>
-                <a class="nav-link fw-bold" href="/daftarpinjam" style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#ffffff'; this.style.textShadow='0px 0px 5px #ffffff'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)';">Daftar Peminjaman</a>
+                <a class="nav-link fw-bold {{ Request::is('daftarruang') ? 'active-link' : '' }}" href="/daftarruang"
+                    style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#fffacd'; this.style.textShadow='0px 0px 5px #fffacd'; this.style.transform='scale(1.1)';" onmouseout="if(!this.classList.contains('active-link')) { this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)'; }">Daftar Ruangan</a>
+                <a class="nav-link fw-bold {{ Request::is('/') ? 'active-link' : '' }}" href="/"
+                    style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#fffacd'; this.style.textShadow='0px 0px 5px #fffacd'; this.style.transform='scale(1.1)';" onmouseout="if(!this.classList.contains('active-link')) { this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)'; }">Beranda</a>
+                <a class="nav-link fw-bold {{ Request::is('daftarpinjam') ? 'active-link' : '' }}" href="/daftarpinjam"
+                    style="color: #f6f1de; transition: color 0.3s, text-shadow 0.3s, transform 0.3s;" onmouseover="this.style.color='#fffacd'; this.style.textShadow='0px 0px 5px #fffacd'; this.style.transform='scale(1.1)';" onmouseout="if(!this.classList.contains('active-link')) { this.style.color='#f6f1de'; this.style.textShadow='none'; this.style.transform='scale(1)'; }">Daftar Peminjaman</a>
             </div>
+
+            <style>
+                .active-link {
+                    color: #ffffff !important;
+                    text-shadow: 0px 0px 5px #ffffff !important;
+                    transform: scale(1.1) !important;
+                }
+            </style>
 
             <div class="d-flex align-items-center gap-4">
                 @auth
