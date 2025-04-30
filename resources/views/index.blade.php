@@ -2,12 +2,12 @@
 
 @section('content')
     <style>
-        /* Custom Styles */
+        
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         body {
             background-color: #f3f4f6;
-            font-family: 'Poppins', sans-serif;
+            font-family:  sans-serif;
         }
 
         .hero-area {
@@ -27,7 +27,7 @@
 
         .hero-content h2 span {
             color: #576ebb;
-            /* Ganti warna teks menjadi biru tua dari palet */
+          
         }
 
         .hero-content p {
@@ -52,7 +52,7 @@
             gap: 8px;
         }
 
-        /* pakein hover d tombol ajukan peminjaman*/
+ 
         .main-btn:hover {
             background-color: #3e3f5b;
             border-color: #3e3f5b;
@@ -61,7 +61,7 @@
 
         .hero-btn {
             text-align: center;
-            /* Tengahkan tombol */
+            
         }
 
         .hero-left {
@@ -145,7 +145,7 @@
                 </div>
                 <div class="col-lg-6 order-lg-1">
                     <div class="hero-content pe-lg-5">
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">
+                        <h2 class="wow fadeInUp" data-wow-delay=".2s" style="font-family: 'Poppins'">
                             Sistem Peminjaman Ruangan<br>
                             <span>Fakultas Teknik UNTIRTA</span>
                         </h2>
@@ -187,12 +187,12 @@
                 </div>
             </div>
 
-            <div class="feature-cards">
+            <div class="feature-cards d-flex justify-content-center align-items-center"> 
                 <div class="feature-card">
                     <img src="assets/images/Tata1.png" alt="Icon 1" class="feature-icon">
                 </div>
 
-                <div class="feature-card">
+                <div class="feature-card feature-card-highlighted">
                     <img src="assets/images/Tata2.png" alt="Icon 2" class="feature-icon">
                 </div>
 
@@ -210,11 +210,18 @@
 
                 .feature-card {
                     flex: 0 1 auto;
+                    margin: 0 10px; 
                 }
 
                 .feature-icon {
                     width: 230px;
                     height: auto;
+                    transition: transform 0.3s ease;
+                }
+
+                .feature-card-highlighted .feature-icon {
+                    width: 260px; 
+                    transform: scale(1.1); 
                 }
             </style>
 
@@ -285,6 +292,14 @@
                     </div>
                 </div>
             </div>
+            <style>
+                .single-skill {
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                }
+            </style>
         </div>
     </section>
 @endsection

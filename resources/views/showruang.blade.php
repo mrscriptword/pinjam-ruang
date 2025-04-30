@@ -1,112 +1,154 @@
 @extends('layouts.main')
 
 @section('content')
-<div style="background-color: #f2efe7;" class="vh-100">
+
+
+<div style="background-color: #f6f1de" >
     <div class="container pt-5 pb-5">
-        <!-- Bagian Atas: Gambar + Info dan Form -->
-        <div class="d-flex rounded" style="width: 100%; min-height: 60vh;">
-            <!-- Kiri: Gambar + Informasi Ruangan -->
-            <div class="position-relative col-md-6 d-none d-md-block">
-                @if ($room->img && Storage::exists('public/' . $room->img))
-                    <img src="{{ asset('storage/' . $room->img) }}" class="w-100 h-100" style="object-fit: cover; border-radius: 25px 0 0 25px;" alt="{{ $room->name }}">
-                @else
-                    @if ($room->img)
-                        <img src="{{ asset($room->img) }}" class="w-100 h-100" style="object-fit: cover; border-radius: 25px 0 0 25px;" alt="{{ $room->name }}">
-                    @else
-                        <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: #8ab2a6; border-radius: 25px 0 0 25px; color: #f2efe7;">
-                            <p>Gambar tidak tersedia</p>
+        <h1 class="mt" style="font-family: 'Cal Sans'; color: #3e3f5b !important;">Form peminjaman</h1>
+        <h6 style="width: 55%; color: #3e3f5b;">Isi form di bawah ini untuk mengajukan peminjaman ruangan sesuai kebutuhan Anda. Pastikan semua informasi yang dimasukkan sudah benar sebelum mengirimkan permohonan.</h6>
+    
+            <div class="container pt-5 pb-5" >
+                <!-- Bagian Atas: Gambar + Info dan Form -->
+                <div class="d-flex rounded" style="width: 100%; height: 75vh;">
+                    <!-- Kiri: Gambar + Informasi Ruangan -->
+                    <div class="position-relative col-md-6 d-none d-md-block">
+                        <div class="image-container">
+                            @if ($room->img && Storage::exists('public/' . $room->img))
+                                <img src="{{ asset('storage/' . $room->img) }}" class="w-100 h-100" style="object-fit: cover; border-radius: 25px 0 0 25px;" alt="{{ $room->name }}">
+                            @elseif ($room->img)
+                                <img src="{{ asset($room->img) }}" class="w-100 h-100" style="object-fit: cover; border-radius: 25px 0 0 25px;" alt="{{ $room->name }}">
+                            @else
+                                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: #8ab2a6; border-radius: 25px 0 0 25px; color: #f2efe7;">
+                                    <p>Gambar tidak tersedia</p>
+                                </div>
+                            @endif
+
+                            <!-- Info Detail Ruangan muncul di hover -->
+                            <div class="position-absolute top-0 start-0 end-0 bottom-0 text-start room-info" style="height: 100%;">
+                                <table class="table table-borderless h-100" style="color: #3e3f5b; background-color: transparent;">
+                                    <tbody>
+                                        <tr style="background-color: #8ab2a6;">
+                                            <td><strong>Kode Ruangan</strong></td>
+                                            <td>: {{ $room->code }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Gedung</strong></td>
+                                            <td>: {{ $room->building->name }}</td>
+                                        </tr>
+                                        <tr style="background-color: #8ab2a6;">
+                                            <td><strong>Lantai</strong></td>
+                                            <td>: {{ $room->floor }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Kapasitas</strong></td>
+                                            <td>: {{ $room->capacity }}</td>
+                                        </tr>
+                                        <tr style="background-color: #8ab2a6;">
+                                            <td><strong>Tipe Ruangan</strong></td>
+                                            <td>: {{ $room->type }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Deskripsi</strong></td>
+                                            <td>: {{ $room->description }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    @endif
-                @endif
-                <div class="position-absolute top-50 translate-middle-y ps-3 text-start" style="left: 7%; background-color: rgba(242, 239, 231, 0.9); padding: 20px; border-radius: 15px;">
-                    <h3 style="color: #3e3f5b; font-family: 'Cal Sans', sans-serif;">{{ $room->name }}</h3>
-                    <table class="table table-borderless" style="color: #3e3f5b; background-color: transparent;">
-                        <tbody>
-                            <tr style="background-color: #8ab2a6;">
-                                <td><strong>Kode Ruangan</strong></td>
-                                <td>: {{ $room->code }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Gedung</strong></td>
-                                <td>: {{ $room->building->name }}</td>
-                            </tr>
-                            <tr style="background-color: #8ab2a6;">
-                                <td><strong>Lantai</strong></td>
-                                <td>: {{ $room->floor }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Kapasitas</strong></td>
-                                <td>: {{ $room->capacity }}</td>
-                            </tr>
-                            <tr style="background-color: #8ab2a6;">
-                                <td><strong>Tipe Ruangan</strong></td>
-                                <td>: {{ $room->type }}</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Deskripsi</strong></td>
-                                <td>: {{ $room->description }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    </div>
+
+                    <!-- Kanan: Form Peminjaman -->
+                    <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #3e3f5b; border-radius: 0 25px 25px 0;">
+                        <form action="/daftarpinjam" method="post" style="width: 80%;" id="roomBookingForm">
+                            @csrf
+                            <div class="mb-3 text-start">
+                                <label for="room_id" class="form-label" style="color: #f2efe7;">Kode Ruangan</label>
+                                <select class="form-select" name="room_id" id="room_id" style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required>
+                                    @if ($room->code == request()->segment(count(request()->segments())))
+                                        <option value="{{ $room->id }}" selected>{{ $room->name }}</option>
+                                    @endif
+                                </select>
+                            </div>
+                            <div class="mb-3 text-start">
+                                <label for="purpose" class="form-label" style="color: #f2efe7;">Tujuan</label>
+                                <input type="text" class="form-control @error('purpose') is-invalid @enderror" id="purpose" name="purpose"
+                                    placeholder="Masukan tujuan peminjaman" style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required>
+                                @error('purpose')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3 text-start">
+                                    <label for="time_start_use" class="form-label" style="color: #f2efe7;">Mulai Pinjam</label>
+                                    <input type="datetime-local" class="form-control @error('time_start_use') is-invalid @enderror" id="time_start_use" name="time_start_use"
+                                        style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required min="{{ date('Y-m-d\TH:i') }}">
+                                    @error('time_start_use')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <div class="invalid-feedback" id="time_start_feedback">
+                                        Waktu mulai pinjam tidak boleh di masa lalu.
+                                    </div>
+                                </div>
+                                <div class="col mb-3 text-start">
+                                    <label for="time_end_use" class="form-label" style="color: #f2efe7;">Selesai Pinjam</label>
+                                    <input type="datetime-local" class="form-control @error('time_end_use') is-invalid @enderror" id="time_end_use" name="time_end_use"
+                                        style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required>
+                                    @error('time_end_use')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                    <div class="invalid-feedback" id="time_end_feedback">
+                                        Waktu selesai pinjam harus setelah waktu mulai pinjam.
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn w-100" style="background-color: #8ab2a6; border-radius: 25px; height: 50px; font-family: 'Cal Sans', sans-serif; color: #f2efe7; letter-spacing: 3px; transition: transform 0.3s, text-shadow 0.3s;"
+                                onmouseover="this.style.transform='scale(1.1)'; this.style.textShadow='0px 0px 5px #f2efe7';"
+                                onmouseout="this.style.transform='scale(1)'; this.style.textShadow='none';">KIRIM</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
-            <!-- Kanan: Form Peminjaman -->
-            <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #3e3f5b; border-radius: 0 25px 25px 0;">
-                <form action="/daftarpinjam" method="post" style="width: 80%;" id="roomBookingForm">
-                    @csrf
-                    <div class="mb-3 text-start">
-                        <label for="room_id" class="form-label" style="color: #f2efe7;">Kode Ruangan</label>
-                        <select class="form-select" name="room_id" id="room_id" style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required>
-                            @if ($room->code == request()->segment(count(request()->segments())))
-                                <option value="{{ $room->id }}" selected>{{ $room->name }}</option>
-                            @endif
-                        </select>
-                    </div>
-                    <div class="mb-3 text-start">
-                        <label for="purpose" class="form-label" style="color: #f2efe7;">Tujuan</label>
-                        <input type="text" class="form-control @error('purpose') is-invalid @enderror" id="purpose" name="purpose"
-                            placeholder="Masukan tujuan peminjaman" style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required>
-                        @error('purpose')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="row">
-                        <div class="col mb-3 text-start">
-                            <label for="time_start_use" class="form-label" style="color: #f2efe7;">Mulai Pinjam</label>
-                            <input type="datetime-local" class="form-control @error('time_start_use') is-invalid @enderror" id="time_start_use" name="time_start_use"
-                                style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required min="{{ date('Y-m-d\TH:i') }}">
-                            @error('time_start_use')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                            <div class="invalid-feedback" id="time_start_feedback">
-                                Waktu mulai pinjam tidak boleh di masa lalu.
-                            </div>
-                        </div>
-                        <div class="col mb-3 text-start">
-                            <label for="time_end_use" class="form-label" style="color: #f2efe7;">Selesai Pinjam</label>
-                            <input type="datetime-local" class="form-control @error('time_end_use') is-invalid @enderror" id="time_end_use" name="time_end_use"
-                                style="border-radius: 25px; height: 45px; border-color: #66897e; background-color: #f2efe7;" required>
-                            @error('time_end_use')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                            <div class="invalid-feedback" id="time_end_feedback">
-                                Waktu selesai pinjam harus setelah waktu mulai pinjam.
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn w-100" style="background-color: #8ab2a6; border-radius: 25px; height: 50px; font-family: 'Cal Sans', sans-serif; color: #f2efe7; letter-spacing: 3px; transition: transform 0.3s, text-shadow 0.3s;"
-                        onmouseover="this.style.transform='scale(1.1)'; this.style.textShadow='0px 0px 5px #f2efe7';"
-                        onmouseout="this.style.transform='scale(1)'; this.style.textShadow='none';">KIRIM</button>
-                </form>
-            </div>
-        </div>
+            <!-- CSS untuk efek hover -->
+            <style>
+                .image-container {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                }
+
+                .image-container img {
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 25px 0 0 25px;
+                    object-fit: cover;
+                }
+
+                .room-info {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: rgba(242, 239, 231, 0.9);
+                    padding: 20px;
+                    border-radius: 25px 0 0 25px;
+                    display: none;
+                    z-index: 1;
+                    color: #3e3f5b;
+                }
+
+                .image-container:hover .room-info {
+                    display: block;
+                }
+            </style>
 
         <!-- Bagian Bawah: Tabel Daftar Peminjaman -->
         <div class="row mt-5">
@@ -172,6 +214,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <script>
