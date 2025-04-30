@@ -1,7 +1,7 @@
 @extends('dashboard.layouts.main')
 
 @section('container')
-<div class="content-container" id="content-container">
+<div class="col-md-10 p-0">
     <div class="card-body text-end">
         @if (session()->has('adminSuccess'))
         <div class="col-md-16 mx-auto alert alert-success text-center  alert-success alert-dismissible fade show"
@@ -27,9 +27,9 @@
             Tambah Admin Baru
         </button>
         @endif
-
+        </div>
         <div class="table-responsive d-flex justify-content-center">
-            <div style="width: auto; margin: 0 auto;"> <!-- Adjusted to center align without resizing -->
+            <div style="width: 820px; margin: 0 auto;"> <!-- Adjusted to center align without resizing -->
                 <table class="table table-hover table-stripped table-bordered text-center dt-head-center" id="datatable">
                     <thead class="table-info">
                         <tr>
@@ -77,8 +77,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
 </div>
 @endsection
 

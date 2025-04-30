@@ -153,7 +153,7 @@
         <div class="row">
             <div class="col-xl-6 col-lg-7 col-md-10 mx-auto">
                 <div class="section-title text-center">
-                <h2 class="mb-15 wow fadeInUp" data-wow-delay=".2s" style="margin-top: 40px;">Tentang Sipirang</h2> 
+                <h2 class="mb-15 wow fadeInUp" data-wow-delay=".2s" style="margin-top: 20%;">Tentang Sipirang</h2> 
                     <p class="wow fadeInUp" data-wow-delay=".4s">
                         Sipirang (Sistem Peminjaman Ruangan) adalah platform digital yang dirancang untuk mempermudah pengelolaan dan peminjaman ruang di lingkungan Fakultas Teknik UNTIRTA. 
                         Sistem ini bertujuan untuk menciptakan transparansi, efisiensi, dan kenyamanan bagi seluruh civitas akademika.
@@ -194,7 +194,7 @@
     
   </style>
 
-        <div class="row">
+        <div class="row" style="margin-top: 10%;">
             <div class="col-xl-6 col-lg-7 col-md-10 mx-auto">
                 <div class="section-title text-center">
                     <h2 class="mb-15 wow fadeInUp" data-wow-delay=".2s" style="margin-top: 40px;">Cara Pinjam?</h2>
@@ -204,7 +204,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="margin-top: 20px;">
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="single-skill wow fadeInUp" data-wow-delay=".2s">
                         <div class="skill-icon">
