@@ -3,23 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title }} | PIRUTA</title>
+    <title>{{ $title }} | Sipirang UNTIRTA </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url('assets/images/LOGO_ORIGINAL.png') }}" type="image/x-icon">
+
 </head>
   <body style="background-color: #f6f1de;" class="d-flex justify-content-center align-items-center vh-100">
 
     <div class="d-flex text-center rounded" style="width: 75%; height: 75%; background-color: #3e3f5b;">
-        <div class="position-relative col-md-6 d-none d-md-block">
+        <div class="position-relative col-md-6 d-none d-md-block rounded-start" style="border: 1px solid transparent;">
             <img src="/assets/images/login-estetik.png"
                  class="w-100 h-100"
                  style="object-fit: cover;"
                  alt="Gambar Login">
           
             <div class="position-absolute top-50 translate-middle-y ps-3 text-start" style="left: 7%">
-                <h1 style="color: #f6f1de !important; font-family: 'Cal Sans'; font-size:100px">Selamat Datang !!</h1>
+                <h1 style="color: #f6f1de !important; font-family: 'Cal Sans'; font-size:80px">Selamat Datang !!</h1>
             </div>
             <div class="position-absolute" style="left: 4%; top: 4%">
                 <img src="assets/images/LOGO_ORIGINAL.png" alt="" style="width: 60px; height: 60px;">

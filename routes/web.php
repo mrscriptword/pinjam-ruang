@@ -14,6 +14,7 @@ use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\TemporaryRentController;
 use App\Http\Controllers\DashboardAdminController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,12 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::middleware(['auth'])->group(function () {
 
+    // Mark notification as read route
+    Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('mark.notification.read');
+
+    // Add AJAX search route for rooms
+    Route::get('/search-rooms', [DaftarRuangController::class, 'searchRooms'])->name('search.rooms');
+
     Route::get('/dashboard/overview', function () {
         return view('/dashboard/overview/index', [
             'title' => "Dashboard Admin",
@@ -53,6 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('dashboard/rents-export', [DashboardRentController::class, 'export'])->name('rents.export');
         Route::get('dashboard/rents/{id}/endTransaction', [DashboardRentController::class, 'endTransaction']);
         Route::resource('dashboard/rooms', DashboardRoomController::class);
+        Route::get('/dashboard/search-rooms', [DashboardRoomController::class, 'searchRooms'])->name('dashboard.search.rooms');
         Route::resource('dashboard/users', DashboardUserController::class);
         Route::resource('dashboard/admin', DashboardAdminController::class);
         Route::resource('/daftarpinjam', DashboardRentController::class);
@@ -60,7 +68,6 @@ Route::middleware(['auth'])->group(function () {
         // Update the method name from 'removeAdmin' to 'demoteToUser'
         Route::get('dashboard/admin/{id}/demote', [DashboardAdminController::class, 'demoteToUser'])->name('admin.demote'); // Renamed route and method
         Route::post('/dashboard/users/import', [DashboardUserController::class, 'import'])->name('users.import');
-
     });
 
     Route::resource('/daftarpinjam', DashboardRentController::class);
