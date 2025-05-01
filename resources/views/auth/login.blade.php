@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
+    <link rel="icon" href="{{ url('assets/images/LOGO_ORIGINAL.png') }}" type="image/x-icon">
+
 </head>
   <body style="background-color: #f6f1de;" class="d-flex justify-content-center align-items-center vh-100">
 

@@ -9,7 +9,7 @@
             pengalaman terbaik!</h6>
     </div>
     <div class="nav-input-group position-relative" style="max-width: 300px;">
-        <input type="text" id="searchInput" class="form-control rounded-pill ps-3 pe-5" placeholder="Search rooms..." style="border: 2px solid #A9D6C1; background-color: transparent;">
+        <input type="text" id="searchInput" class="form-control rounded-pill ps-3 pe-5" placeholder="Search rooms..." style="border: 2px solid #3e3f5b; background-color: transparent;">
         <button class="btn position-absolute end-0 top-50 translate-middle-y me-1" id="searchButton" style="background: none; border: none;">
             <i class="bi bi-search text-secondary"></i>
         </button>
