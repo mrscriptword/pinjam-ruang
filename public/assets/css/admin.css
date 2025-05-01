@@ -38,6 +38,14 @@ body {
     }
 }
 
+#toggle-sidebar {
+    align-self: flex-end; /* Align the button to the right */
+    margin-right: 10px; /* Add some spacing from the edge */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 aside {
     background-color: #2d3b55;
     padding: 50px 24px;
@@ -77,8 +85,8 @@ aside #toggle-navbar {
     font-size: 14px;
     line-height: 21px;
     color: #abb3c4;
-    margin-top: 40px;
-    margin-bottom: 12px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 .sidebar-item {
     text-decoration: none;
@@ -476,7 +484,17 @@ aside #toggle-navbar {
 }
 
 .sidebar.collapsed .sidebar-item {
-    text-align: center; /* Align center when collapsed */
+    justify-content: center; /* Center align items */
+    margin-bottom: 20px; /* Add spacing between items */
+}
+
+.sidebar.collapsed .sidebar-logo {
+    margin-bottom: 30px; /* Add spacing below the logo */
+}
+
+.sidebar.collapsed #toggle-sidebar {
+    align-self: center; /* Center align the toggle button */
+    margin-bottom: 20px; /* Add spacing below the toggle button */
 }
 
 .table-responsive > div {
@@ -484,4 +502,35 @@ aside #toggle-navbar {
     margin: 0 auto; /* Center align the table container */
     max-width: none; /* Prevent resizing */
     text-align: center; /* Ensure content alignment */
+}
+
+.sidebar.collapsed {
+    width: 100px; /* Adjust as needed */
+    text-align: center; /* Center align text */
+}
+
+.sidebar.collapsed .sidebar-title,
+.sidebar.collapsed .sidebar-item span {
+    display: none; /* Hide text but keep icons visible */
+}
+
+.sidebar.collapsed .sidebar-logo {
+    justify-content: center; /* Center align logo */
+}
+
+.sidebar.collapsed .sidebar-item {
+    justify-content: center; /* Center align items */
+}
+
+.sidebar.collapsed .sidebar-item svg {
+    margin-right: 0; /* Remove spacing for icons */
+}
+
+.sidebar.collapsed #toggle-sidebar {
+    align-self: center; /* Center align the toggle button */
+    margin-right: 0; /* Remove right margin */
+}
+
+.sidebar:not(.collapsed) #toggle-sidebar {
+    margin-bottom: 20px; /* Add spacing below the toggle button */
 }

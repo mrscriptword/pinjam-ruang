@@ -17,8 +17,9 @@
 <body style="background-color: #f6f1de;">
     <nav class="navbar navbar-expand-lg px-3" style="background-color: #3e3f5b;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
-                <img src="/assets/images/logo_UNTIRTA.png" alt="Logo" width="50" height="50">
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ asset('assets/images/Logo_UNTIRTA.png') }}" style="width: 50px" alt="">
+                <span class="nav-link fw-bold ms-2" style="color: #f6f1de; font-size: 1rem;">Sipirang UNTIRTA</span>
             </a>
 
             <div class="mx-auto d-flex gap-4">
@@ -113,7 +114,7 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
+    <div class="container mt-5" style="margin-bottom: 10%">
         @yield('content')
     </div>
 

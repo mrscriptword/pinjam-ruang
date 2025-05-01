@@ -1,14 +1,15 @@
 <aside class="sidebar" id="sidebar">
-    <a href="#" class="sidebar-logo">
-        <div class="d-flex justify-content-start align-items-center">
-            <img src="{{ asset('assets/images/Logo_UNTIRTA.png') }}" style="width: 50px" alt="">
-            <span>Pinjam Ruang</span>
-        </div>
-    </a>
-
-    <button id="toggle-sidebar" onclick="toggleSidebar()" class="btn btn-link">
-        <img src="/assets/navbar-times.svg" alt="Toggle Sidebar">
-    </button>
+    <div class="d-flex flex-column align-items-center">
+        <button id="toggle-sidebar" onclick="toggleSidebar()" class="btn btn-link">
+            <img src="/assets/burger.svg" alt="Toggle Sidebar">
+        </button>
+        <a href="#" class="sidebar-logo mt-2"> <!-- Add margin-top for spacing -->
+            <div class="d-flex justify-content-center align-items-center">
+                <img src="{{ asset('assets/images/Logo_UNTIRTA.png') }}" style="width: 50px" alt="">
+                <span>Pinjam Ruang</span>
+            </div>
+        </a>
+    </div>  
 
     <h5 class="sidebar-title">Menu</h5>
 
@@ -104,7 +105,7 @@
     @auth
     <form action="/logout" method="post">
         @csrf
-        <button class="sidebar-item btn btn-link" onclick="toggleActive(this)">
+        <button class="sidebar-item btn btn-link logout-button" onclick="toggleActive(this)">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M16 17L21 12L16 7" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
@@ -137,9 +138,7 @@
 <script>
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
-        const contentContainer = document.getElementById('content-container'); // Adjust selector to match your content container
         sidebar.classList.toggle('collapsed');
-        contentContainer.classList.toggle('centered');
     }
 </script>
 
@@ -172,20 +171,6 @@
         margin-right: 0px; /* Adjust alignment for collapsed state */
     }
 
-    #toggle-sidebar {
-        position: absolute;
-        top: 20px;
-        right: -40px;
-        background: #fff;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
     .content-container {
         margin-left: auto;
         margin-right: auto;
@@ -195,5 +180,12 @@
 
     .content-container.centered {
         width: calc(100% - 80px); /* Adjust width for collapsed sidebar */
+    }
+
+    .logout-button:hover {
+        color: #fff;
+        background-color: #ff4d4d; /* Red glow effect */
+        box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d; /* Glow effect */
+        transition: all 0.3s ease;
     }
 </style>
