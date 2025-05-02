@@ -37,7 +37,7 @@
                                     <th class="text-center align-middle" style="width: 15%;">Mulai Pinjam</th>
                                     <th class="text-center align-middle" style="width: 15%;">Selesai Pinjam</th>
                                     <th class="text-center align-middle" style="width: 15%;">Tujuan</th>
-                                    <th class="text-center align-middle" style="width: 15%;">Waktu Transaksi</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Waktu Peminjaman</th>
                                     <th class="text-center align-middle" style="width: 15%;">Kembalikan</th>
                                     <th class="text-center align-middle" style="width: 15%;">Status Pinjam</th>
                                     @if (auth()->user()->role_id <= 2)

@@ -151,7 +151,7 @@
         }
 
         /* About Section */
-        .skill-area {
+        .about-area {
             padding: 100px 0;
         }
 
@@ -336,6 +336,134 @@
             margin-bottom: 0;
         }
 
+        /* Hero Section Improvements */
+        .hero-image-container {
+            position: relative;
+            height: 600px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s ease;
+            z-index: 1;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            max-height: 500px;
+            max-width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .image-decoration {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(87,110,187,0.1) 0%, rgba(255,255,255,0) 50%);
+            z-index: 1;
+        }
+
+        .welcome-badge {
+            display: inline-block;
+            background-color: rgba(87, 110, 187, 0.1);
+            color: var(--primary-color);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h1 {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 2.8rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+        }
+
+        .greeting {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(87, 110, 187, 0.2);
+            z-index: -1;
+            border-radius: 4px;
+        }
+
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 24px;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+            text-decoration: none !important;
+        }
+
+        .secondary-btn:hover {
+            background-color: var(--primary-color);
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-image-container {
+                height: 400px;
+                margin-top: 2rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-features {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-btns {
+                margin-bottom: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .secondary-btn {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 1200px) {
             .step-card {
@@ -471,28 +599,55 @@
     <section id="home" class="hero-area">
         <div class="container">
             <div class="row align-items-center">
+                <!-- Bagian Gambar (Tetap di kanan) -->
                 <div class="col-lg-6 order-lg-2">
-                    <div class="hero-left wow fadeInRight" data-wow-delay=".4s">
-                        <img src="assets/images/crodas.png" alt="Crodas maskot UNTIRTA" class="img-fluid">
+                    <div class="hero-image-container wow fadeInRight" data-wow-delay=".4s">
+                        <img src="assets/images/crodas.png" alt="Crodas maskot UNTIRTA" class="hero-image">
+                        <div class="image-decoration"></div>
                     </div>
                 </div>
+                
+                <!-- Bagian Konten (Tetap di kiri) -->
                 <div class="col-lg-6 order-lg-1">
                     <div class="hero-content pe-lg-5">
-                        <h2 class="wow fadeInUp" data-wow-delay=".2s">
-                            Sistem Peminjaman Ruangan<br>
-                            <span>Fakultas Teknik UNTIRTA</span>
-                        </h2>
+                        <div class="welcome-badge wow fadeInUp" data-wow-delay=".1s">
+                            Halo, {{ Auth::user() ? Auth::user()->name : 'Sobat Teknik' }}!
+                            Selamat Datang di Sipirang UNTIRTA
+                        </div>
+                        
+                        <h1 class="wow fadeInUp" data-wow-delay=".2s">
+                            Sistem Pinjam Ruangan<br>
+                            <span class="highlight">Fakultas Teknik UNTIRTA</span>
+                        </h1>
+                        
                         <p class="wow fadeInUp" data-wow-delay=".3s">
-                            Layanan peminjaman ruangan terintegrasi untuk civitas akademika.
-                            Kelola jadwal, ajukan permohonan, dan pantau status peminjaman
-                            secara real-time melalui sistem kami.
+                            Layanan terintegrasi untuk mempermudah proses peminjaman ruangan di lingkungan 
+                            Fakultas Teknik UNTIRTA. Akses kapan saja, di mana saja!
                         </p>
-                        <div class="hero-btns wow fadeInUp" data-wow-delay=".4s">
+                        
+                        <div class="hero-btns wow fadeInUp" data-wow-delay=".5s">
                             <a href="/daftarruang" class="main-btn" style="text-decoration: none;">
                                 Ajukan Peminjaman
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
                                 </svg>
+                            </a>
+                        </div>
+                        
+                        <div class="secondary-btns mt-4 wow fadeInUp" data-wow-delay=".6s">
+                            <a href="#about" class="secondary-btn me-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                </svg>
+                                Tentang Sipirang
+                            </a>
+                            <a href="#how-to" class="secondary-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+                                </svg>
+                                Cara Penggunaan
                             </a>
                         </div>
                     </div>
@@ -501,7 +656,7 @@
         </div>
     </section>
 
-    <section id="skill" class="skill-area pt-170">
+    <section id="about" class="about-area pt-170" \>
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 col-lg-7 col-md-10 mx-auto">
@@ -533,7 +688,7 @@
         </div>
     </section>
 
-    <section class="how-to-section">
+    <section class="how-to-section" id="how-to">
         <div class="container">
             <div class="row">
                 <div class="col-xl-6 col-lg-7 col-md-10 mx-auto">
