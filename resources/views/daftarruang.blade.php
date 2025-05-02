@@ -33,9 +33,7 @@
                             style="min-height: 200px;">
                             <div>
                                 <h5 class="card-title fw-bold" style="color: #f6f1de;">{{ $room->name }}</h5>
-                                <p class="card-text text-white-50">Gedung {{ $room->building->name }} -
-                                    {{ $room->code }}
-                                </p>
+                                <p class="card-text text-white-50">Gedung {{ $room->building->name }}</p>
                             </div>
                             <div class="d-flex justify-content-between align-items-center mt-auto">
                                 <small><i class="bi bi-people"></i> {{ $room->capacity }} seats -
