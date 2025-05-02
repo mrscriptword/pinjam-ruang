@@ -84,31 +84,31 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'Aula Fakultas Teknik',
+            'code' => 'aulaFT',
             'name' => 'Aula Fakultas Teknik',
             'img' => 'assets/images/ruang/aula-fak-teknik.jpeg',
             'floor' => 1,
             'status' => false,
             'capacity' => 200,
-            'type' => 'Aula',
+            'type' => 'Ruangan Aula',
             'description' => 'Gedung aula di Fakultas Teknik Untirta biasanya digunakan untuk kegiatan perkuliahan besar, seminar, workshop, atau acara-acara penting lainnya yang membutuhkan ruang yang luas dan kapasitas besar.',
             'building_id' => 1,
         ]);
 
         Room::create([
-            'code' => 'Auditorium Dekanat',
+            'code' => 'auditDekanat',
             'name' => 'Auditorium Dekanat',
             'img' => 'assets/images/ruang/auditorium-dekanat.png',
             'floor' => 2,
             'status' => false,
             'capacity' => 100,
-            'type' => 'Auditorium',
+            'type' => 'Ruangan Auditorium',
             'description' => 'Ruang Auditorium ini berada di lantai 2 gedung Dekanat Fakultas Teknik. Auditorium ini digunakan sebagai sarana kegiatan ilmiah antara lain stadium general, seminar, workshop pendidikan, dan kegiatan sejenisnya.',
             'building_id' => 2,
         ]);
 
         Room::create([
-            'code' => 'BR.1-1',
+            'code' => 'br1.1',
             'name' => 'BR.1-1',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 1,
@@ -120,7 +120,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'BR.1-2',
+            'code' => 'br1.2',
             'name' => 'BR.1-2',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 1,
@@ -132,7 +132,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Room::create([
-            'code' => 'BR.1-3',
+            'code' => 'br1.3',
             'name' => 'BR.1-3',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 1,
@@ -144,7 +144,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'BR.2-1',
+            'code' => 'br2.1',
             'name' => 'BR.2-1',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 2,
@@ -156,7 +156,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'BR.2-2',
+            'code' => 'br2.2',
             'name' => 'BR.2-2',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 2,
@@ -168,7 +168,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Room::create([
-            'code' => 'BR.2-3',
+            'code' => 'br2.3',
             'name' => 'BR.2-3',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 2,
@@ -180,7 +180,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'BR.3-1',
+            'code' => 'br3.1',
             'name' => 'BR.3-1',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 3,
@@ -192,7 +192,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'BR.3-2',
+            'code' => 'br3.2',
             'name' => 'BR.3-2',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 3,
@@ -204,7 +204,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'BR.3-3',
+            'code' => 'br3.3',
             'name' => 'BR.3-3',
             'img' => 'assets/images/ruang/gedung-br.jpeg',
             'floor' => 3,
@@ -216,7 +216,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-1',
+            'code' => 'r2.1',
             'name' => 'R2-1',
             'img' => 'assets/images/ruang/gedung-r.png',
             'floor' => 2,
@@ -228,7 +228,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-2',
+            'code' => 'r2.2',
             'name' => 'R2-2',
             'img' => 'assets/images/ruang/gedung-r.png',
             'floor' => 2,
@@ -240,7 +240,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-3',
+            'code' => 'r2.3',
             'name' => 'R2-3',
             'img' => 'assets/images/ruang/gedung-r.png',
             'floor' => 2,
@@ -252,7 +252,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-4',
+            'code' => 'r2.4',
             'name' => 'R2-4',
             'img' => 'assets/images/ruang/gedung-r.png',
             'floor' => 2,
@@ -264,7 +264,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-5',
+            'code' => 'r2.5',
             'name' => 'R2-5',
             'img' => 'assets/images/ruang/gedung-r.png',
             'floor' => 2,
@@ -276,7 +276,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-6',
+            'code' => 'r2.6',
             'name' => 'R2-6',
             'img' => 'assets/images/ruang/gedung-r.png',
             'floor' => 2,
@@ -288,7 +288,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-14',
+            'code' => 'r2.14',
             'name' => 'R2-14',
             'img' => 'assets/images/ruang/lab-komputer.jpeg',
             'floor' => 2,
@@ -300,7 +300,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-15',
+            'code' => 'r2.15',
             'name' => 'R2-15',
             'img' => 'assets/images/ruang/lab-komputer.jpeg',
             'floor' => 2,
@@ -312,7 +312,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Room::create([
-            'code' => 'R2-16',
+            'code' => 'r2.16',
             'name' => 'R2-16',
             'img' => 'assets/images/ruang/lab-komputer.jpeg',
             'floor' => 2,
