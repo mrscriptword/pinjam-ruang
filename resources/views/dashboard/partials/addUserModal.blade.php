@@ -59,15 +59,11 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="role_id" class="form-label d-block">User Role</label>
-                        <select class="form-select" aria-label="Default select example" name="role_id" id="role_id"
-                            value="{{ old('role_id') }}" required>
-                            <option selected disabled>Pilih Role</option>
-                            @foreach ($roles as $role)
-                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+    <label for="role_id" class="form-label d-block">Role</label>
+    <div class="form-control">Mahasiswa</div>
+    <input type="hidden" name="role_id" value="2">
+</div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Tambah</button>
