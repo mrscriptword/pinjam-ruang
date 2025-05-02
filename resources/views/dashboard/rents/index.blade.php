@@ -23,29 +23,29 @@
             <i class="bi bi-file-earmark-excel"></i> Export to CSV
         </a>
         @endif
-        <div class="table-responsive">
-            <div class="d-flex justify-content-start">
-                {{ $adminRents->links() }}
-            </div>
-            <table class="table table-hover table-stripped table-bordered text-center dt-head-center" id="datatable">
-                <thead class="table-info">
-                    <tr>
-                        <th scope="row">No.</th>
-                        <th scope="row">Kode Ruangan</th>
-                        @if (auth()->user()->role_id <= 2)
-                            <th scope="row">Nama Peminjam</th>
-                            @endif
-                            <th scope="row">Mulai Pinjam</th>
-                            <th scope="row">Selesai Pinjam</th>
-                            <th scope="row">Tujuan</th>
-                            <th scope="row">Waktu Transaksi</th>
-                            <th scope="row">Kembalikan</th>
-                            <th scope="row">Status Pinjam</th>
-                            @if (auth()->user()->role_id <= 2)
-                                <th scope="row">Action</th>
-                                @endif
-                    </tr>
-                </thead>
+                <div class="d-flex">
+                    <div class="table-responsive" style="width: 100%; margin-right: -75px;">
+                        <table class="fl-table table align-middle table-hover"
+                            style="width: 100%; table-layout: auto;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center align-middle" style="width: 5%;">No.</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Kode Ruangan</th>
+                                    @if (auth()->user()->role_id <= 2)
+                                    <th class="text-center align-middle" style="width: 15%;">Nama Peminjam</th>
+                                    @endif
+                                    <th class="text-center align-middle" style="width: 15%;">Mulai Pinjam</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Selesai Pinjam</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Tujuan</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Waktu Transaksi</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Kembalikan</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Status Pinjam</th>
+                                    @if (auth()->user()->role_id <= 2)
+                                    <th class="text-center align-middle" style="width: 15%;">Action</th>
+                                    @endif
+                                </tr>
+                            </thead>
+
                 <tbody>
                     @if ($adminRents->count() > 0)
                     @foreach ($adminRents as $rent)

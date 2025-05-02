@@ -1,15 +1,12 @@
-<aside class="sidebar" id="sidebar">
-    <div class="d-flex flex-column align-items-center">
-        <button id="toggle-sidebar" onclick="toggleSidebar()" class="btn btn-link">
-            <img src="/assets/burger.svg" alt="Toggle Sidebar">
-        </button>
-        <a href="#" class="sidebar-logo mt-2"> <!-- Add margin-top for spacing -->
-            <div class="d-flex justify-content-center align-items-center">
-                <img src="{{ asset('assets/images/Logo_UNTIRTA.png') }}" style="width: 50px" alt="">
-                <span>Pinjam Ruang</span>
-            </div>
-        </a>
-    </div>  
+<div class="sidebar-hover-zone"></div>
+<aside id="sidebar" class="sidebar">
+    <button id="toggleSidebar" class="sidebar-toggle-btn">☰</button>
+    <a href="#" class="sidebar-logo">
+        <div class="d-flex justify-content-start align-items-center">
+            <img src="{{ asset('assets/images/Logo_UNTIRTA.png') }}" style="width: 50px" alt="">
+            <span>Pinjam Ruang</span>
+        </div>
+    </a> 
 
     <h5 class="sidebar-title">Menu</h5>
 
@@ -105,7 +102,7 @@
     @auth
     <form action="/logout" method="post">
         @csrf
-        <button class="sidebar-item btn btn-link logout-button" onclick="toggleActive(this)">
+        <button class="sidebar-logout" type="submit">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <path d="M16 17L21 12L16 7" stroke="#ABB3C4" stroke-width="2" stroke-linecap="round"
@@ -136,56 +133,65 @@
 </aside>
 
 <script>
-    function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
-        sidebar.classList.toggle('collapsed');
-    }
+        const savedState = sessionStorage.getItem('sidebarState') || 'collapsed';
+
+        if (savedState === 'collapsed') {
+        sidebar.classList.add('collapsed');
+    document.documentElement.classList.add('sidebar-collapsed');
+} else {
+    sidebar.classList.remove('collapsed');
+    document.documentElement.classList.remove('sidebar-collapsed');
+}
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const hoverZone = document.querySelector('.sidebar-hover-zone');
+
+        // Set default collapsed saat reload
+        const isRefreshed = performance.navigation.type === performance.navigation.TYPE_RELOAD;
+        if (isRefreshed) {
+            sessionStorage.setItem('sidebarState', 'collapsed');
+        }
+
+        // Ambil status sebelumnya dari sessionStorage
+        const savedState = sessionStorage.getItem('sidebarState') || 'collapsed';
+        if (savedState === 'collapsed') {
+            sidebar.classList.add('collapsed');
+        } else {
+            sidebar.classList.remove('collapsed');
+        }
+
+        // Toggle tombol manual
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            sessionStorage.setItem('sidebarState', sidebar.classList.contains('collapsed') ? 'collapsed' : 'expanded');
+        });
+
+        // Toggle menu active state
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Hover behavior — gunakan class hover-open agar tidak bentrok dengan collapsed
+        hoverZone.addEventListener('mouseenter', () => {
+            if (sidebar.classList.contains('collapsed')) {
+                sidebar.classList.add('hover-open');
+            }
+        });
+
+        sidebar.addEventListener('mouseleave', () => {
+            sidebar.classList.remove('hover-open');
+        });
+    });
 </script>
 
-<style>
-    .sidebar {
-        width: 250px;
-        transition: width 0.3s ease;
-    }
 
-    .sidebar.collapsed {
-        width: 100px; /* Adjust as needed */
-    }
-
-    .sidebar.collapsed .sidebar-title,
-    .sidebar.collapsed .sidebar-item span {
-        display: none; /* Hide text but keep icons visible */
-    }
-
-    .sidebar.collapsed .sidebar-logo span {
-        display: none;
-    }
-
-    .sidebar-item svg {
-        width: 24px; /* Keep icon size consistent */
-        height: 24px; /* Keep icon size consistent */
-        margin-right: 20px; /* Maintain spacing */
-    }
-
-    .sidebar.collapsed .sidebar-item svg {
-        margin-right: 0px; /* Adjust alignment for collapsed state */
-    }
-
-    .content-container {
-        margin-left: auto;
-        margin-right: auto;
-        width: calc(100% - 250px); /* Default width for expanded sidebar */
-        transition: width 0.3s ease, margin 0.3s ease;
-    }
-
-    .content-container.centered {
-        width: calc(100% - 80px); /* Adjust width for collapsed sidebar */
-    }
-
-    .logout-button:hover {
-        color: #fff;
-        background-color: #ff4d4d; /* Red glow effect */
-        box-shadow: 0 0 10px #ff4d4d, 0 0 20px #ff4d4d; /* Glow effect */
-        transition: all 0.3s ease;
-    }
-</style>
+    
+    
+    
+    
+    

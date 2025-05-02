@@ -23,18 +23,18 @@
             Tambah Ruangan
         </button>
         @endif
-        <div class="table-responsive">
-            <table class="table table-hover table-stripped table-bordered text-center dt-head-center">
-                <thead class="table-info">
-                    <tr>
-                        <th class="text-center" scope="row">No.</th>
-                        <th class="text-center" scope="row">Kode Ruangan</th>
-                        <th class="text-center" scope="row">Nama Ruangan</th>
-                        <th class="text-center" scope="row">Kapasitas</th>
-
-                        <th class="text-center" scope="row">Action</th>
-
-                    </tr>
+                <div class="d-flex">
+                    <div class="table-responsive" style="width: 100%; margin-right: -75px;">
+                        <table class="fl-table table align-middle table-hover"
+                            style="width: 100%; table-layout: auto;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center align-middle" style="width: 5%;">No.</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Kode Ruangan</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Nama Ruangan</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Kapasitas</th>
+                                    <th class="text-center align-middle" style="width: 15%;">Action</th>
+                                </tr>
                 </thead>
                 <tbody>
 
@@ -77,9 +77,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="d-flex justify-content-end">
-            {{ $rooms->links() }}
-        </div>
+    </div>
+    <div class="d-flex justify-content-end mt-3">
+        {{ $rooms->links() }}
     </div>
 </div>
 @extends('dashboard.partials.rentModal')
