@@ -92,7 +92,7 @@
                 stroke-linejoin="round" />
         </svg>
 
-        <span>Konfirmasi Pinjaman</span>
+        <span>Konfirmasi Peminjaman</span>
     </a>
 
     @endif
