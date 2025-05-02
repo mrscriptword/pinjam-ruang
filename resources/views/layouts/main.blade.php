@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap" rel="stylesheet">
 </head>
-
 <body style="background-color: #f6f1de;">
     <nav class="navbar navbar-expand-lg px-3" style="background-color: #3e3f5b;">
         <div class="container-fluid">
@@ -41,74 +39,17 @@
 
             <div class="d-flex align-items-center gap-4">
                 @auth
-                <div class="dropdown">
-                    <i class="bi bi-bell-fill fs-5 position-relative" style="color: #f6f1de; transition: transform 0.3s, color 0.3s; cursor: pointer;"
-                        data-bs-toggle="dropdown" aria-expanded="false" onmouseover="this.style.transform='scale(1.2)'; this.style.color='#ffffff';"
-                        onmouseout="this.style.transform='scale(1)'; this.style.color='#f6f1de';">
-                        @php
-                        $approvedRentals = \App\Models\Rent::where('user_id', auth()->user()->id)
-                        ->whereIn('status', ['dipinjam', 'ditolak'])
-                        ->where('read_status', false)
-                        ->count();
-                        @endphp
-                        @if ($approvedRentals > 0)
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ $approvedRentals }}
-                        </span>
-                        @endif
-                    </i>
-                    <ul class="dropdown-menu dropdown-menu-end" style="width: 320px; max-height: 400px; overflow-y: auto;">
-                        <li>
-                            <h6 class="dropdown-header">Pemberitahuan Peminjaman</h6>
-                        </li>
-                        @php
-                        $approvedRentalsList = \App\Models\Rent::with(['room', 'user'])
-                        ->where('user_id', auth()->user()->id)
-                        ->whereIn('status', ['dipinjam', 'ditolak'])
-                        ->where('read_status', false)
-                        ->orderBy('updated_at', 'desc')
-                        ->take(5)
-                        ->get();
-                        @endphp
-
-                        @if ($approvedRentalsList->count() > 0)
-                        @foreach ($approvedRentalsList as $rent)
-                        <li>
-                            <a class="dropdown-item notification-item" href="{{ route('mark.notification.read', ['id' => $rent->id]) }}">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <div class="w-100">
-                                        <p class="mb-0 fw-bold text-truncate">{{ $rent->room->name }} ({{ $rent->room->code }})</p>
-                                        <p class="mb-0 small text-truncate">{{ Str::limit($rent->purpose, 25) }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <span class="badge {{ $rent->status == 'dipinjam' ? 'bg-success' : 'bg-danger' }}">
-                                                {{ $rent->status == 'dipinjam' ? 'Disetujui oleh admin' : 'Ditolak oleh admin' }}
-                                            </span>
-                                            <small class="text-muted">{{ \Carbon\Carbon::parse($rent->updated_at)->diffForHumans() }}</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        @endforeach
-                        <li><a class="dropdown-item text-center" href="/daftarpinjam">Lihat Semua Peminjaman</a></li>
-                        @else
-                        <li><span class="dropdown-item">Tidak ada pemberitahuan</span></li>
-                        @endif
-                    </ul>
-                </div>
-                <form action="/logout" method="post">
-                    @csrf
-                    <button type="submit" class="btn border border-warning rounded-pill text-warning">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </button>
-                </form>
+                    <i class="bi bi-bell-fill fs-5" style="color: #f6f1de; transition: transform 0.3s, color 0.3s; cursor: pointer;" onmouseover="this.style.transform='scale(1.2)'; this.style.color='#ffffff';" onmouseout="this.style.transform='scale(1)'; this.style.color='#f6f1de';"></i>
+                    <form action="/logout" method="post">
+                        @csrf
+                        <button type="submit" class="btn border border-warning rounded-pill text-warning">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
                 @else
-                <a href="/login" class="btn border border-warning rounded-pill text-warning">
-                    <i class="bi bi-box-arrow-in-right"></i> Login
-                </a>
+                    <a href="/login" class="btn border border-warning rounded-pill text-warning">
+                        <i class="bi bi-box-arrow-in-right"></i> Login
+                    </a>
                 @endauth
             </div>
         </div>
@@ -142,5 +83,4 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 </body>
-
 </html>

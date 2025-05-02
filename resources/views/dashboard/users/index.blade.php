@@ -39,17 +39,20 @@
     </form>
 @endif
 
-                <table class="table table-hover table-stripped table-bordered text-center">
-                    <thead class="table-info">
-                        <tr>
-                            <th scope="row">No.</th>
-                            <th scope="row">Username</th>
-                            <th scope="row">Nomor Induk</th>
-                            <th scope="row">Email</th>
-                            <th scope="row">Role</th>
-                            <th scope="row">Action</th>
-                        </tr>
-                    </thead>
+                    <div class="d-flex">
+                        <div class="table-responsive" style="width: 100%; margin-right: -75px;">
+                            <table class="fl-table table align-middle table-hover"
+                                style="width: 100%; table-layout: auto;">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="text-center align-middle" style="width: 5%;">No.</th>
+                                        <th class="text-center align-middle" style="width: 15%;">Username</th>
+                                        <th class="text-center align-middle" style="width: 15%;">Nomor Induk</th>
+                                        <th class="text-center align-middle" style="width: 15%;">Email</th>
+                                        <th class="text-center align-middle" style="width: 15%;">Role</th>
+                                        <th class="text-center align-middle" style="width: 15%;">Action</th>
+                                    </tr>
+                                </thead>
                     <tbody>
 
                         @if ($users->count() > 0)

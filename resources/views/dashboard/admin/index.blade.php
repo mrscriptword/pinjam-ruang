@@ -28,16 +28,17 @@
         </button>
         @endif
         </div>
-        <div class="table-responsive d-flex justify-content-center">
-            <div style="width: 820px; margin: 0 auto;"> <!-- Adjusted to center align without resizing -->
-                <table class="table table-hover table-stripped table-bordered text-center dt-head-center" id="datatable">
-                    <thead class="table-info">
+        <div class="d-flex">
+            <div class="table-responsive" style="width: 100%; margin-right: -75px;">
+                <table class="fl-table table align-middle table-hover"
+                    style="width: 100%; table-layout: auto;">
+                    <thead class="thead-dark">
                         <tr>
-                            <th scope="row">No.</th>
-                            <th scope="row">Username</th>
-                            <th scope="row">Nomor Induk</th>
-                            <th scope="row">Email</th>
-                            <th scope="row">Action</th>
+                            <th class="text-center align-middle" style="width: 5%;">No.</th>
+                            <th class="text-center align-middle" style="width: 15%;">Username</th>
+                            <th class="text-center align-middle" style="width: 15%;">Nomor Induk</th>
+                            <th class="text-center align-middle" style="width: 15%;">Email</th>
+                            <th class="text-center align-middle" style="width: 15%;">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,29 +86,12 @@
 {{-- @extends('dashboard.partials.chooseAdminModal') --}}
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const sidebar = document.getElementById('sidebar');
-        const contentContainer = document.getElementById('content-container');
-        const tableWrapper = document.querySelector('.table-responsive > div');
-
-        function adjustContent() {
-            if (sidebar.classList.contains('collapsed')) {
-                contentContainer.style.marginLeft = 'auto';
-                contentContainer.style.marginRight = 'auto';
-                contentContainer.style.width = '800px'; // Fixed width for collapsed sidebar
-                tableWrapper.style.maxWidth = '900px'; // Wider table when sidebar is collapsed
-            } else {
-                contentContainer.style.marginLeft = 'auto';
-                contentContainer.style.marginRight = 'auto';
-                contentContainer.style.width = '800px'; // Fixed width for expanded sidebar
-                tableWrapper.style.maxWidth = '700px'; // Narrower table when sidebar is expanded
-            }
-        }
-
-        // Adjust content on sidebar toggle
-        document.getElementById('toggle-sidebar').addEventListener('click', adjustContent);
-
-        // Initial adjustment
-        adjustContent();
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleButton = document.getElementById('toggleSidebar'); // ← sesuaikan dengan ID yang kamu pakai
+        toggleButton?.addEventListener('click', function () {
+            document.body.classList.toggle('sidebar-collapsed');
+        });
     });
 </script>
+
+

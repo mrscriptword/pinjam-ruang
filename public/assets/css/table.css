@@ -10,21 +10,20 @@
     border-collapse: collapse;
     width: 100%;
     max-width: 100%;
-    background-color: #fdf7e9; /* warna krem muda */
-    color: #000; /* teks hitam */
-    border: 2px solid #f6a8a8; /* garis luar tabel */
+    color: #2d3b55; /* teks hitam */
+    border: 2px solid #000; /* garis luar tabel */
 }
 
 .fl-table th,
 .fl-table td {
-    border: 1px solid #f6a8a8; /* warna pink terang */
+    border: 1px solid #000; /* warna pink terang */
     text-align: center;
     padding: 10px;
 }
 
 .fl-table thead th {
-    background-color: #ffcfd0; /* header pink terang */
-    color: #000; /* teks header hitam */
+    background-color: #afd9a5; /* header pink terang */
+    color: #2d3b55; /* teks header hitam */
     font-weight: bold;
 }
 
@@ -44,7 +43,7 @@
         display: block;
         text-align: right;
         font-size: 11px;
-        color: white;
+        color: black;
         padding: 0 0 10px;
     }
     .fl-table thead,

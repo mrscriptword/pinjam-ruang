@@ -33,17 +33,9 @@ body {
     display: block;
 }
 @media (min-width: 1200px) {
-    #toggle-navbar {
+    .sidebar-toggle-btn {
         display: none;
     }
-}
-
-#toggle-sidebar {
-    align-self: flex-end; /* Align the button to the right */
-    margin-right: 10px; /* Add some spacing from the edge */
-    background: transparent;
-    border: none;
-    cursor: pointer;
 }
 
 aside {
@@ -80,27 +72,34 @@ aside #toggle-navbar {
     color: #fff;
     margin-left: 16px;
 }
+.sidebar-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+}
 .sidebar-title {
     font-weight: 400;
     font-size: 14px;
     line-height: 21px;
     color: #abb3c4;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin-top: 40px;
+    margin-bottom: 12px;
 }
 .sidebar-item {
     text-decoration: none;
-    display: block;
+    display: flex;
     background: transparent;
     height: 46px;
     border-radius: 16px;
-    padding: 0 11px;
+    padding: 10px 20px;
     margin-bottom: 8px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    text-align: left; /* Default alignment */
+    text-align: left;
     transition: text-align 0.3s ease;
+    gap: 15px;
 }
 .sidebar-item.active {
     background: #afd9a5;
@@ -111,20 +110,157 @@ aside #toggle-navbar {
 .sidebar-item.active svg path {
     stroke: #fff;
 }
+
 .sidebar-item svg {
-    width: 18px;
-    height: 18px;
-    margin-right: 20px;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
 }
 .sidebar-item svg path {
     stroke: #abb3c4;
 }
 .sidebar-item span {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    /* identical to box height */
-    color: #ffff;
+    flex-grow: 1;
+    color: #fff;
+}
+
+.sidebar-container {
+    position: relative;
+}
+
+.sidebar-hover-zone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100vh;
+    z-index: 999;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    background-color: #2d3b55;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.hovered {
+    width: 250px !important;
+}
+
+.sidebar.collapsed {
+    width: 100px;
+}
+
+.sidebar.collapsed .sidebar-item span,
+.sidebar.collapsed .sidebar-logo span,
+.sidebar.collapsed .sidebar-title {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-item {
+    justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-item.active {
+    border-radius: 12px;
+}
+
+.sidebar-toggle-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #2d3b55;
+    color: white;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 16px auto; /* Center horizontally dalam sidebar */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: #1b2a3d;
+    transform: scale(1.05);
+}
+
+.sidebar-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+}
+
+.sidebar-logout {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 46px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.sidebar-logout:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar.collapsed .sidebar-logout span {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-logout {
+    justify-content: center;
+}
+
+.sidebar-logout svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.sidebar.hover-open {
+    width: 250px;
+}
+
+/* Tampilkan teks saat hover */
+.sidebar.hover-open .sidebar-item span,
+.sidebar.hover-open .sidebar-logo span,
+.sidebar.hover-open .sidebar-title,
+.sidebar.hover-open .sidebar-logout span {
+    display: inline;
+}
+
+/* Rata kiri saat hover */
+.sidebar.hover-open .sidebar-item,
+.sidebar.hover-open .sidebar-logout {
+    justify-content: flex-start;
+    padding: 10px 20px;
+    gap: 12px;
+}
+
+/* Logo tetap seperti toggle saat hover */
+.sidebar.hover-open .sidebar-logo {
+    align-items: flex-start;
+}
+
+/* Sesuaikan border-radius untuk active item saat hover */
+.sidebar.hover-open .sidebar-item.active {
+    border-radius: 16px;
 }
 
 .col-navbar {
@@ -484,17 +620,7 @@ aside #toggle-navbar {
 }
 
 .sidebar.collapsed .sidebar-item {
-    justify-content: center; /* Center align items */
-    margin-bottom: 20px; /* Add spacing between items */
-}
-
-.sidebar.collapsed .sidebar-logo {
-    margin-bottom: 30px; /* Add spacing below the logo */
-}
-
-.sidebar.collapsed #toggle-sidebar {
-    align-self: center; /* Center align the toggle button */
-    margin-bottom: 20px; /* Add spacing below the toggle button */
+    text-align: left; /* Align center when collapsed */
 }
 
 .table-responsive > div {
@@ -504,33 +630,25 @@ aside #toggle-navbar {
     text-align: center; /* Ensure content alignment */
 }
 
-.sidebar.collapsed {
-    width: 100px; /* Adjust as needed */
-    text-align: center; /* Center align text */
+.transition-all {
+    transition: all 0.3s ease;
 }
 
-.sidebar.collapsed .sidebar-title,
-.sidebar.collapsed .sidebar-item span {
-    display: none; /* Hide text but keep icons visible */
+/* Default padding saat sidebar terbuka */
+#container {
+    padding-left: 250px;
 }
 
-.sidebar.collapsed .sidebar-logo {
-    justify-content: center; /* Center align logo */
+/* Saat sidebar ditutup */
+.sidebar-collapsed #container {
+    padding-left: 80px;
 }
 
-.sidebar.collapsed .sidebar-item {
-    justify-content: center; /* Center align items */
+.sidebar-collapsed #content-container {
+    justify-content: flex-start !important;
 }
 
-.sidebar.collapsed .sidebar-item svg {
-    margin-right: 0; /* Remove spacing for icons */
-}
-
-.sidebar.collapsed #toggle-sidebar {
-    align-self: center; /* Center align the toggle button */
-    margin-right: 0; /* Remove right margin */
-}
-
-.sidebar:not(.collapsed) #toggle-sidebar {
-    margin-bottom: 20px; /* Add spacing below the toggle button */
+.sidebar-collapsed #table-wrapper {
+    margin-left: 0 !important;
+    margin-right: auto;
 }

@@ -3,24 +3,24 @@
 @section('container')
 <div class="col-md-10 p-0">
     <div class="card-body text-end">
-        <div class="table-responsive">
-            <div class="d-flex justify-content-start">
-                {{ $rents->links() }}
-            </div>
-            <table class="table table-hover table-stripped table-bordered text-center dt-head-center" id="datatable">
-                <thead class="table-info">
-                    <tr>
-                        <th scope="row">No.</th>
-                        <th scope="row">Nama Ruangan</th>
-                        <th scope="row">Nama Peminjam</th>
-                        <th scope="row">Mulai Pinjam</th>
-                        <th scope="row">Selesai Pinjam</th>
-                        <th scope="row">Tujuan</th>
-                        <th scope="row">Mulai Transaksi</th>
-                        <th scope="row">Status Pinjam</th>
-                        <th scope="row">Action</th>
-                    </tr>
-                </thead>
+        <div class="d-flex">
+            <div class="table-responsive" style="width: 100%; margin-right: -75px;">
+                <table class="fl-table table align-middle table-hover"
+                    style="width: 100%; table-layout: auto;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th class="text-center align-middle" style="width: 5%;">No.</th>
+                            <th class="text-center align-middle" style="width: 15%;">Kode Ruangan</th>
+                            <th class="text-center align-middle" style="width: 15%;">Nama Peminjam</th>
+                            <th class="text-center align-middle" style="width: 15%;">Mulai Pinjam</th>
+                            <th class="text-center align-middle" style="width: 15%;">Selesai Pinjam</th>
+                            <th class="text-center align-middle" style="width: 15%;">Tujuan</th>
+                            <th class="text-center align-middle" style="width: 15%;">Waktu Transaksi</th>
+                            <th class="text-center align-middle" style="width: 15%;">Kembalikan</th>
+                            <th class="text-center align-middle" style="width: 15%;">Status Pinjam</th>
+                            <th class="text-center align-middle" style="width: 15%;">Action</th>
+                        </tr>
+                    </thead>
                 <tbody>
 
                     @if ($rents->count() > 0)
