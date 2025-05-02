@@ -32,7 +32,7 @@
 
     <div class="d-flex justify-content-between align-items-center nav-input-container">
         <div class="nav-input-group">
-            <input type="text" id="searchInput" class="nav-input" placeholder="Search...">
+            <input type="text" id="searchInput" class="nav-input text-dark" placeholder="Search...">
             <button class="btn-nav-input" id="searchButton"><img src="/assets/search.svg" alt=""></button>
             <button class="btn-nav-clear" id="clearSearchButton" style="display: none;"><i class="bi bi-x-lg"></i></button>
         </div>
@@ -50,7 +50,7 @@
                 </span>
                 @endif
             </button>
-            <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown" style="width: 300px; max-height: 400px; overflow-y: auto;">
+            <ul class="dropdown-menu dropdown-menu-end notification-dropdown" aria-labelledby="notificationDropdown" style="width: 500px; max-height: 400px; overflow-y: auto;">
                 <li>
                     <h6 class="dropdown-header">Pemberitahuan</h6>
                 </li>

@@ -1,10 +1,10 @@
 <div class="sidebar-hover-zone"></div>
 <aside id="sidebar" class="sidebar">
-    <button id="toggleSidebar" class="sidebar-toggle-btn">☰</button>
+    <button id="toggleSidebar" class="sidebar-toggle-btn" style="position: absolute; width: 0; height: 0; opacity: 0; overflow: hidden;">☰</button>
     <a href="#" class="sidebar-logo">
         <div class="d-flex justify-content-start align-items-center">
             <img src="{{ asset('assets/images/Logo_UNTIRTA.png') }}" style="width: 50px" alt="">
-            <span>Pinjam Ruang</span>
+            <span>Sipirang UNTIRTA</span>
         </div>
     </a> 
 
