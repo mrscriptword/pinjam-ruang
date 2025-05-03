@@ -16,7 +16,7 @@ class DashboardRentController extends Controller
     public function index()
     {
         return view('dashboard.rents.index', [
-            'adminRents' => Rent::latest()->paginate(10),
+            'adminRents' => Rent::where('status', '!=', 'pending')->with(['room', 'user'])->latest()->paginate(10),
             'userRents' => Rent::where('user_id', auth()->user()->id)->get(),
             'title' => "Peminjaman",
             'rooms' => Room::all(),
