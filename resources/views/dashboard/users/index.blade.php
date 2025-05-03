@@ -67,7 +67,7 @@
                                         <td style="font-size: 22px;">
                                              <a href="/dashboard/users/{{ $user->id }}/edit" class="edituser"
                                                 id="edituser" data-id="{{ $user->id }}" data-bs-toggle="modal"
-                                                data-bs-target="#edituser"><i
+                                                data-bs-target="#edituser-{{ $user->id }}"><i
                                                     class="bi bi-pencil-square text-warning"></i></a>&nbsp; 
                                             <a href="/dashboard/users/{{ $user->id }}/makeAdmin" class="makeadmin"
                                                 id="makeadmin"><i class="bi bi-person-plus-fill"></i></a>&nbsp;
@@ -95,6 +95,49 @@
 
         </div>
     </div>
+    @foreach ($users as $user)
+        <div class="modal fade" id="edituser-{{ $user->id }}" tabindex="-1" aria-labelledby="formModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="formModalLabel">Form Edit {{ $user->name }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: left;">
+                        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="post" id="editformuser-{{ $user->id }}">
+                            @method('put')
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $user->id }}">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" name="name" value="{{ $user->name }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nomor_induk" class="form-label">Nomor Induk</label>
+                                <input type="number" class="form-control" name="nomor_induk" value="{{ $user->nomor_induk }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ $user->email }}" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="role_id" class="form-label">Role</label>
+                                <select class="form-select" name="role_id" required>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     @extends('dashboard.partials.addUserModal')
     @extends('dashboard.partials.editUserModal')
 @endsection
